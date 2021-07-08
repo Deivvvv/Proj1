@@ -7,6 +7,7 @@ public class MapRedactor : MonoBehaviour
 {
     private MapData mapData;
     private MapInterfase MapI;
+    public Camera camera;
 
     [SerializeField]
     private Tilemap[] level;
@@ -28,27 +29,77 @@ public class MapRedactor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            st = !st;
-        }
-            if (st)
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
-            Vector3Int mousePos1 = new Vector3Int((int)(mousePos.x - 0.2f), (int)(mousePos.y - 0.5f), 50);
-            x = (int)mousePos.y;
-            y = (int)mousePos.x;
-            Ghost.transform.position = new Vector3Int((int)(mousePos.x -0.3f), (int)(mousePos.y +0.5f), 50);//Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                                                                                                            // Debug.Log($"{x}  {y}");
-            if (Input.GetMouseButtonDown(0))
-            {
-                mousePos1 = new Vector3Int(x, y, 50);
-                // .. Debug.Log($"{x}  {y}");
-                level[MapI.curentPalitte].SetTile(mousePos1, mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile);
+        int a = 1920;
+        int b = 1080;
+        float fg = a/ b;
+        Debug.Log($"{fg} =   {Screen.width}/ {Screen.height}");
+        Vector3 mousePos =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int mousePos1 = new Vector3Int(Mathf.RoundToInt(mousePos.y), Mathf.RoundToInt((mousePos.x * fg)), 50);
+        //  Vector3 mousePos1 = new Vector3(mousePos.x, mousePos.y, 50);
 
 
-                //   .thisTile = mapData.DataTile[MapI.curentPalitte].Data[curentTile].tile;
-            }
-        }
+
+
+        /////https://habr.com/ru/post/147082/
+        ///
+
+        //    level[MapI.curentPalitte].ClearAllTiles();
+        //   level[MapI.curentPalitte].SetTile(mousePos1, mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile);
+        //  Ghost.transform.position = mousePos1;//Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //   RaycastHit hit;
+        ////   Vector3Int mousePos1 = new Vector3Int(0, 0, 0);
+        ////   Vector3 objectHit;
+        //   Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        //   Debug.Log(ray.GetPoint);
+        //   hit = Physics.Raycast(ray);
+        //   if (Physics.Raycast(ray, out hit))
+        //   {
+        //       Vector3Int mousePos1 = new Vector3Int(
+        //         Mathf.RoundToInt(hit.transform.position.x),///(int)(mousePos.x - 0.2f),
+        //        Mathf.RoundToInt(hit.transform.position.y)//(int)(mousePos.y - 0.5f)
+        //         , 50);
+        //       Ghost.transform.position = mousePos1;
+        //       //    objectHit = hit.transform.position;
+        //   }
+        //  int x =
+        //  Mathf.Round(float f)
+
+
+        //   Ghost.transform.position = mousePos1;//Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        //////if (Input.GetMouseButtonDown(0))
+        //////{
+        //////    RaycastHit hit;\
+        //////    Debug.Log(ray);
+        //////    if (Physics.Raycast(ray, out hit))
+        //////    {
+
+        //////        Transform objectHit = hit.transform;
+        //////        Debug.Log(objectHit);
+        //////    }
+
+        //////}
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    st = !st;
+        //}
+        //    if (st)
+        //{
+        //    Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
+        //    Vector3Int mousePos1 = new Vector3Int((int)(mousePos.x - 0.2f), (int)(mousePos.y - 0.5f), 50);
+        //    x = (int)mousePos.y;
+        //    y = (int)mousePos.x;
+        //    Ghost.transform.position = new Vector3Int((int)(mousePos.x -0.3f), (int)(mousePos.y +0.5f), 50);//Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //                                                                                                    // Debug.Log($"{x}  {y}");
+        //    if (Input.GetMouseButtonDown(0))
+        //    {
+        //        mousePos1 = new Vector3Int(x, y, 50);
+        //        // .. Debug.Log($"{x}  {y}");
+        //        level[MapI.curentPalitte].SetTile(mousePos1, mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile);
+
+
+        //        //   .thisTile = mapData.DataTile[MapI.curentPalitte].Data[curentTile].tile;
+        //    }
+        //}
     }
 }
