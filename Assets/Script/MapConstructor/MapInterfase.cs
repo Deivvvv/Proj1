@@ -11,17 +11,19 @@ public class MapInterfase : MonoBehaviour
      
      */
 
-    [SerializeField]
+ //   [SerializeField]
     private MapData mapData;
 
     [SerializeField]
     private GameObject palliteWindow;
     [SerializeField]
     private GameObject origButton;
+    [SerializeField]
+    private Image curentTileImage;
 
-    private bool palliteMood;
-    private byte curentPalitte;
-    private int curentTile;
+    public bool palliteMood;
+    public byte curentPalitte;
+    public int curentTile;
 
     [SerializeField]
     private Button[] button;
@@ -53,6 +55,8 @@ public class MapInterfase : MonoBehaviour
                 GameObject go = Instantiate(origButton);
                 go.transform.SetParent(palliteWindow.transform);
                 ButtonsLoad(i, go);
+
+                go.transform.GetChild(0).GetComponent<Image>().sprite = mapData.DataTile[curentPalitte].Data[i].headSprite;
             }
         }
         //else
@@ -70,6 +74,7 @@ public class MapInterfase : MonoBehaviour
     private void PressButtonTile(int id)
     {
         curentTile = id;
+        curentTileImage.sprite = mapData.DataTile[curentPalitte].Data[curentTile].headSprite;
     }
 
     private void PressButton(int id)
@@ -101,6 +106,7 @@ public class MapInterfase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mapData  = GetComponent<MapData>();
         Application.targetFrameRate = 30;
         for (int i =0; i < button.Length; i++)
         {
@@ -109,9 +115,4 @@ public class MapInterfase : MonoBehaviour
         PalliteLoad(curentPalitte);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

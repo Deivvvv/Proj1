@@ -12,12 +12,13 @@ public class MapData : MonoBehaviour
 [System.Serializable]
 public class SubMapData1
 {
-    public TileBase tile;
+   // public TileBase tile;
     public SubMapData[] Data;
 }
 [System.Serializable]
 public class SubMapData
 {
+    public Sprite headSprite;
     public TileBase tile;
     public float TileSpeed;
     public st Tayp;
