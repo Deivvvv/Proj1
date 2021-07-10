@@ -14,6 +14,7 @@ public class MapRedactor : MonoBehaviour
 
  //   public grid gridd; Cell Size
     public GameObject Ghost;
+    public GridLayout gridLayout;
     public int x;
     public int y;
     public float cell =0.8659766f;
@@ -27,14 +28,19 @@ public class MapRedactor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        int a = 1920;
-        int b = 1080;
-        float fg = a/ b;
-        Debug.Log($"{fg} =   {Screen.width}/ {Screen.height}");
         Vector3 mousePos =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int mousePos1 = new Vector3Int(Mathf.RoundToInt(mousePos.y), Mathf.RoundToInt((mousePos.x * fg)), 50);
+        mousePos = new Vector3(mousePos.x, mousePos.y,50);
+        Vector3Int cellPosition = gridLayout.WorldToCell(mousePos);
+       // level[MapI.curentPalitte].ClearAllTiles();
+        level[MapI.curentPalitte].SetTile(cellPosition, mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile);
+        //int a = 1920;
+        //int b = 1080;
+        //float fg = a/ b;
+        //Debug.Log($"{fg} =   {Screen.width}/ {Screen.height}");
+        //Vector3 mousePos =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector3Int mousePos1 = new Vector3Int(Mathf.RoundToInt(mousePos.y), Mathf.RoundToInt((mousePos.x * fg)), 50);
         //  Vector3 mousePos1 = new Vector3(mousePos.x, mousePos.y, 50);
 
 
