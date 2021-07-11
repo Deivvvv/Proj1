@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f747e8af38fbe4d8819f37be6fd5aa, type: 3}
+  m_Name: Muddy_Hex_2
+  m_EditorClassIdentifier: 
+  m_DefaultSprite: {fileID: 21300000, guid: 5cbe85bd2f32138448ff5a2a828a5859, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 1
+  m_TilingRules:
+  - m_Id: 0
+    m_Sprites:
+    - {fileID: 21300000, guid: 5cbe85bd2f32138448ff5a2a828a5859, type: 3}
+    - {fileID: 21300000, guid: 958bf6757ddc54d4fa9847d719212f7a, type: 3}
+    - {fileID: 21300000, guid: 295782cf37a3edb418522dd6a291d658, type: 3}
+    - {fileID: 21300000, guid: 244ef8c1f85621c43b04b39db4d17341, type: 3}
+    - {fileID: 21300000, guid: 621a8dea74ccaa74298ed5a53b161ac4, type: 3}
+    - {fileID: 21300000, guid: 26fca59b0f04c6649a5cf426a6f3a308, type: 3}
+    - {fileID: 21300000, guid: 569af453868585449ba81bf580e95fb7, type: 3}
+    - {fileID: 21300000, guid: 021a605591efcf347bb7a89adb7316bf, type: 3}
+    - {fileID: 21300000, guid: 69e87c31148c3fc4e8da234452d1d488, type: 3}
+    - {fileID: 21300000, guid: e081125f3c3ae9f4181366858222d144, type: 3}
+    - {fileID: 21300000, guid: c390807e2f4c1fa41a8c8b8a0aae89d4, type: 3}
+    - {fileID: 21300000, guid: 07779228a371bcd4187562f38bc2b735, type: 3}
+    - {fileID: 21300000, guid: da0ff6d33979a9742943c6f49ceef744, type: 3}
+    - {fileID: 21300000, guid: 6e9220f4f91450a4db8bec8500aab678, type: 3}
+    - {fileID: 21300000, guid: 161863daaa7239d44bcd39aa9ea2e174, type: 3}
+    - {fileID: 21300000, guid: a29a29fc7d5153c429b63f2f470554a6, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.53
+    m_Output: 1
+    m_ColliderType: 1
+    m_RandomTransform: 2
+    m_Neighbors: 
+    m_NeighborPositions:
+    - {x: -1, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 1, y: 1, z: 0}
+    - {x: -1, y: 0, z: 0}
+    - {x: 1, y: 0, z: 0}
+    - {x: -1, y: -1, z: 0}
+    - {x: 0, y: -1, z: 0}
+    - {x: 1, y: -1, z: 0}
+    m_RuleTransform: 0
+  m_FlatTop: 0
