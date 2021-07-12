@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f747e8af38fbe4d8819f37be6fd5aa, type: 3}
+  m_Name: Mountain_Hex1
+  m_EditorClassIdentifier: 
+  m_DefaultSprite: {fileID: 21300000, guid: 9e92d964c3a29d747980dedb38ada146, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 1
+  m_TilingRules:
+  - m_Id: 0
+    m_Sprites:
+    - {fileID: 21300000, guid: 9e92d964c3a29d747980dedb38ada146, type: 3}
+    - {fileID: 21300000, guid: ecdd6696acab8d640af66539bd3c59bb, type: 3}
+    - {fileID: 21300000, guid: 51d00ac43cdf7394d871725ea04779bd, type: 3}
+    - {fileID: 21300000, guid: c13f004dbe5c5554eafd59aa14af3ff6, type: 3}
+    - {fileID: 21300000, guid: fb7fc2df12063a04187ccb41c35cb9d3, type: 3}
+    - {fileID: 21300000, guid: 8d04824ab6a2be74391ae8f529846706, type: 3}
+    - {fileID: 21300000, guid: 82d78e91945eb6649abf539655f3ccbb, type: 3}
+    - {fileID: 21300000, guid: 10ca27e3ea43bbe42bf61be7056ae8a0, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 1
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_Neighbors: 
+    m_NeighborPositions:
+    - {x: -1, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 1, y: 1, z: 0}
+    - {x: -1, y: 0, z: 0}
+    - {x: 1, y: 0, z: 0}
+    - {x: -1, y: -1, z: 0}
+    - {x: 0, y: -1, z: 0}
+    - {x: 1, y: -1, z: 0}
+    m_RuleTransform: 0
+  m_FlatTop: 1
