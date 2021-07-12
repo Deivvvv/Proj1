@@ -29,7 +29,43 @@ public class MapRedactor : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {
+    {/*
+      * уровния слоев
+      * 
+      * корневой-биомы
+      * суб border
+      * суб - на основе текущих биомов (биом, являющися частью основного)
+      * пограничный - выражает в себе препятвия
+      * декаративный? - размещенные на нем о
+      * 
+      * реки
+      * дороги
+      * 
+      * заднйи фон башен
+      * башни
+      * переднйи фон башен
+      * 
+      основные типы биомов
+        луга
+            леса
+            горы
+
+        тайга
+            леса
+            горы
+
+        пустыня 
+            холмы
+            горы
+
+        снег
+            леса
+            горы
+
+        является суб биомомо ограничителем
+        вода в соответсвии с местностью
+      
+      */
         Vector3 mousePos =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos = new Vector3(mousePos.x, mousePos.y,50);
         Vector3Int cellPosition = gridLayout.WorldToCell(mousePos);
