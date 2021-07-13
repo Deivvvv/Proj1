@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class MapData : MonoBehaviour
 {
     public SubMapData1[] DataTile;
-
+    public Tilemap[] level;
 }
 
 [System.Serializable]
@@ -23,11 +23,43 @@ public class SubMapData
     public float TileSpeed;
     public st Tayp;
 
+    /*
+     * Laver
+     * water - 1(0)
+     * ground - 2(1)
+     * biom - 2 (2)
+     * 
+     * river - 3(4)
+     * road - 4(5)
+     * brige - 5(6)
+     * 
+     * forest - 6(7)
+     * building
+     */
+  
     public enum st
     {
-        Field,
-        Forest,
-        Mountain
+        WaterNorth,
+        Water,
+        Snow,
+        Mud,
+        Grass,
+        GrassLand,
+        Field
+        //    ,
+        //Forest,
 
+
+
+        //Mountain,
+        //Hole
+
+
+        //     Road,
+        //River,
+        //Brige,
+
+        //Forest
     }
+
 }

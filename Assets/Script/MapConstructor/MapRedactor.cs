@@ -7,7 +7,7 @@ public class MapRedactor : MonoBehaviour
 {
     private MapData mapData;
     private MapInterfase MapI;
-    public Camera camera;
+   // public Camera camera;
 
     [SerializeField]
     private Tilemap[] level;
@@ -20,6 +20,12 @@ public class MapRedactor : MonoBehaviour
     public float cell =0.8659766f;
 
     private bool st;
+
+    private int WorldBiom;
+
+    private Texture2D Map1;
+    private Texture2D Map2;
+    private Texture2D Map3;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +33,13 @@ public class MapRedactor : MonoBehaviour
         MapI = GetComponent<MapInterfase>();
     }
 
+    public void TranfMap(int w, Texture2D M1, Texture2D M2, Texture2D M3)
+    {
+        WorldBiom = w;
+        Map1 = M1;
+        Map2 = M2;
+        Map3 = M3;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {/*
