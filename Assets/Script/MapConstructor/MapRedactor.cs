@@ -61,6 +61,9 @@ public class MapRedactor : MonoBehaviour
         Vector3Int cellPosition = gridLayout.WorldToCell(mousePos);
         // level[MapI.curentPalitte].ClearAllTiles();
 
+    //    int id = Vector3Int.x Map1.width
+
+
         if (NewTile != null)
         {
             mapData.level[palitte].SetTile(cellPosition, NewTile);
@@ -72,6 +75,12 @@ public class MapRedactor : MonoBehaviour
 
         mapData.level[palitte].RefreshAllTiles();
 
+        Color col = new Color(0, 0, 0);
+
+        if (palitte < 3)
+        {
+          //  Map1.SetPixels();
+        }
     }
 
     void FixedUpdate()
@@ -86,6 +95,7 @@ public class MapRedactor : MonoBehaviour
                     if (MapI.curentPalitte == 0)
                     {
                         loadTile(MapI.curentPalitte,null, NewTile);
+                     
                     }
                     else if (MapI.curentPalitte == 1)
                     {
