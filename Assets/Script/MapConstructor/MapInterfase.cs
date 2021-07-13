@@ -99,6 +99,12 @@ public class MapInterfase : MonoBehaviour
             case (5):
                 curentPalitte = 3;//TowerTail
                 break;
+            case (6):
+                curentPalitte = 4;//TowerTail
+                break;
+            //case (7):
+            //    curentPalitte = 5;//TowerTail
+            //    break;
 
         }
         PalliteLoad(curentPalitte);

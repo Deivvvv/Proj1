@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class CoreGenerator : MonoBehaviour
 {
+    public float AllForestCof;
+    public float[] ForestCof;
     public float[] AddScale;
     public GameObject grid;
     public GridLayout gridLayout;
@@ -27,13 +29,17 @@ public class CoreGenerator : MonoBehaviour
         mapData = GetComponent<MapData>();
 
 
-        mapData.level = new Tilemap[3];
+        mapData.level = new Tilemap[6];
         for (int i = 0; i < mapData.level.Length; i++)
         {
             AddGrid(i);
         }
 
         Generate();
+    }
+    void AddForest(int id, Vector3Int D)
+    {
+        AddTile(5,4,id,D);
     }
     void AddTile(int a, int b, int c, Vector3Int D)
     {
@@ -49,63 +55,73 @@ public class CoreGenerator : MonoBehaviour
         GO.GetComponent<TilemapRenderer>().sortingOrder = i;
         mapData.level[i] = GO.GetComponent<Tilemap>();
     }
-    void Generate()
+   public void Generate()
     {
+        for (int iz = 0; iz < mapData.level.Length; iz++)
+        {
+            mapData.level[iz].ClearAllTiles();
+        }
+        int cof1 = 0;
 
         if (Seed != 0)
         {
             Random.seed = Seed;
         }
-        int cof1 = Random.Range(0, mapData.DataTile[0].Data.Length);
-        WorldWater = cof1;
 
-        cof1 = Random.Range(0, mapData.DataTile[1].Data.Length);
-        WorldBiom = cof1;
+        if (WorldWater == -1)
+        {
+            cof1 = Random.Range(0, mapData.DataTile[0].Data.Length);
+            WorldWater = cof1;
+        }
 
-        AddBiom = new int[2];
+        if (WorldBiom == -1)
+        {
+            cof1 = Random.Range(0, mapData.DataTile[1].Data.Length);
+            WorldBiom = cof1;
+        }
+
+       // AddBiom = new int[2];
         bool turn = false;
-        for (int ix = 0; ix < AddBiom.Length; ix++)
+        //for (int ix = 0; ix < AddBiom.Length; ix++)
+        //{
+        //    AddBiom[ix] = -1;
+        //}
+        if (AddBiom[0] == -1)
         {
-            AddBiom[ix] = -1;
-        }
-
-        while (turn == false)
-        {
-            cof1 = Random.Range(0, mapData.DataTile[1].Data.Length);
-            if(cof1 != WorldBiom)
+            while (turn == false)
             {
-                AddBiom[0] = cof1;
-                turn = true;
-            }
-        }
-        turn = false;
-
-        while (turn == false)
-        {
-            cof1 = Random.Range(0, mapData.DataTile[1].Data.Length);
-            if (cof1 != WorldBiom)
-            {
-                if (AddBiom[0] != cof1)
+                cof1 = Random.Range(0, mapData.DataTile[1].Data.Length);
+                if (cof1 != WorldBiom)
                 {
+                    AddBiom[0] = cof1;
+                    turn = true;
+                }
+            }
+            turn = false;
+        }
+        if (AddBiom[1] == -1)
+        {
+            while (turn == false)
+            {
+                cof1 = Random.Range(0, mapData.DataTile[1].Data.Length);
+                if (cof1 != WorldBiom)
+                {
+                    if (AddBiom[0] != cof1)
+                    {
 
-                    AddBiom[1] = cof1;
-                    turn = true; 
+                        AddBiom[1] = cof1;
+                        turn = true;
+                    }
                 }
             }
         }
 
-        int CurentAddBiom = AddBiom[0];
-        //level[MapI.curentPalitte].SetTile(cellPosition, 
-
-        //    mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile
-        //    );
-        //  Texture2D World = new Texture2D(xChunk, yChunk);
-
         Texture2D xc = new Texture2D(xChunk, yChunk);
-      //  xc.filterMode = FilterMode.Point;
-       // Color[] 
-            pix = new Color[xc.width * xc.height];
-        //int[] pixInt = new int[pix.Length];
+        Texture2D xc1 = new Texture2D(xChunk, yChunk);
+        Texture2D xc2 = new Texture2D(xChunk, yChunk);
+        //  xc.filterMode = FilterMode.Point;
+        // Color[] 
+        pix = new Color[xc.width * xc.height];
 
 
 
@@ -126,7 +142,6 @@ public class CoreGenerator : MonoBehaviour
             float x = 0.0F;
             while (x < xc.width)
             {
-               // int cof1 = Random.Range(0, 100);
                 float xCoord = xOrg + x / xc.width * (scale * AddScale[0]);
                 float yCoord = yOrg + y / xc.height * (scale * AddScale[0]);
 
@@ -137,23 +152,14 @@ public class CoreGenerator : MonoBehaviour
                 AddTile(0, 0, WorldWater, D);
                 if (sample > 0.7f)
                 {
-                //    AddTile(0,0,WorldWater, D);
-                    //  //  mapData.level[0]
-                    //    C1 = new Color(WorldWater +1, 0, 0);
-                    //}
-                    //else if (sample > 0.5f)
-                    //    {
-                    //        AddTile(1, 1, WorldBiom, D);
-                    //        AddTile(0, 0, WorldWater, D);
-                    //        //  mapData.level[0]
-                    //        C1 = new Color(WorldWater + 1, WorldBiom + 1, 0);
+
                 }
-                    else
-                    {
+                else
+                {
                     AddTile(1, 1, WorldBiom, D);
-                          C1 = new Color(WorldWater + 1, WorldBiom + 1, 0);
-                   // C1 = new Color(0, WorldBiom + 1, 0);
-                    }
+                    C1 = new Color(WorldWater + 1, WorldBiom + 1, 0);
+                    // C1 = new Color(0, WorldBiom + 1, 0);
+                }
 
                 pix[i] = C1;
                 x++;
@@ -173,7 +179,6 @@ public class CoreGenerator : MonoBehaviour
             float x = 0.0F;
             while (x < xc.width)
             {
-                // int cof1 = Random.Range(0, 100);
                 float xCoord = xOrg + x / xc.width * (scale * AddScale[1]);
                 float yCoord = yOrg + y / xc.height * (scale * AddScale[1]);
 
@@ -195,6 +200,55 @@ public class CoreGenerator : MonoBehaviour
                         C1 = new Color(pix[i].r, pix[i].g, AddBiom[1] + 1);
                     }
                 }
+                pix[i] = C1;
+                x++;
+                i++;
+            }
+            y++;
+        }
+        xc.SetPixels(pix);
+        xc.Apply();
+
+        //forest genertion
+        i = 0;
+        y = 0.0F;
+        while (y < xc.height)
+        {
+            float x = 0.0F;
+            while (x < xc.width)
+            {
+                float xCoord = xOrg + x / xc.width * (scale * AddScale[2]);
+                float yCoord = yOrg + y / xc.height * (scale * AddScale[2]);
+
+                float sample = Mathf.PerlinNoise(xCoord, yCoord);
+
+                Color C1 = new Color(pix[i].r, pix[i].g, 0);
+                if (pix[i].g > 0)
+                {
+                    if (sample > AllForestCof)
+                    {
+
+                        Vector3Int D = new Vector3Int((int)x, (int)y, 50);
+                        if (pix[i].b == 0)
+                        {
+                            cof1 = (int)Random.Range(50 * ForestCof[WorldBiom], 100);
+
+
+                            if (50 < cof1)
+                                AddForest(WorldBiom, D);
+
+                        }
+                        else
+                        {
+                            int id = (int)(pix[i].b) - 1;
+
+                            cof1 = (int)Random.Range(50 * ForestCof[id], 100);
+
+                            if (50 < cof1)
+                                AddForest(id, D);
+                        }
+                    }
+                }
 
                 pix[i] = C1;
                 x++;
@@ -202,20 +256,18 @@ public class CoreGenerator : MonoBehaviour
             }
             y++;
         }
+        xc1.SetPixels(pix);
+        xc1.Apply();
 
 
-        xc.SetPixels(pix);
-        xc.Apply();
-        W = xc;
-        Transf();
-    }
+        gameObject.GetComponent<MapRedactor>().TranfMap(WorldBiom,xc,xc1,xc2);
 
-    void Transf()
-    {
-        for (int i =0; i<mapData.level.Length; i++)
+        for (int iz = 0; iz < mapData.level.Length; iz++)
         {
 
-            mapData.level[i].RefreshAllTiles();
+            mapData.level[iz].RefreshAllTiles();
         }
     }
+
+   
 }
