@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class MapRedactor : MonoBehaviour
 {
+    [SerializeField]
+    private bool look;
     private MapData mapData;
     private MapInterfase MapI;
    // public Camera camera;
@@ -12,14 +14,14 @@ public class MapRedactor : MonoBehaviour
     [SerializeField]
     private Tilemap[] level;
 
- //   public grid gridd; Cell Size
-    public GameObject Ghost;
+
     public GridLayout gridLayout;
     public int x;
     public int y;
     public float cell =0.8659766f;
+    [SerializeField]
+    private Tile nullTile;
 
-    private bool st;
 
     private int WorldBiom;
 
@@ -33,6 +35,15 @@ public class MapRedactor : MonoBehaviour
         MapI = GetComponent<MapInterfase>();
     }
 
+    public void LoadKey(bool key)
+    {
+        look = !key;
+    }
+
+    public void PushMap()
+    {
+
+    }
     public void TranfMap(int w, Texture2D M1, Texture2D M2, Texture2D M3)
     {
         WorldBiom = w;
@@ -41,49 +52,113 @@ public class MapRedactor : MonoBehaviour
         Map3 = M3;
     }
     // Update is called once per frame
-    void FixedUpdate()
-    {/*
-      * уровния слоев
-      * 
-      * корневой-биомы
-      * суб border
-      * суб - на основе текущих биомов (биом, являющися частью основного)
-      * пограничный - выражает в себе препятвия
-      * декаративный? - размещенные на нем о
-      * 
-      * реки
-      * дороги
-      * 
-      * заднйи фон башен
-      * башни
-      * переднйи фон башен
-      * 
-      основные типы биомов
-        луга
-            леса
-            горы
 
-        тайга
-            леса
-            горы
 
-        пустыня 
-            холмы
-            горы
-
-        снег
-            леса
-            горы
-
-        является суб биомомо ограничителем
-        вода в соответсвии с местностью
-      
-      */
-        Vector3 mousePos =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos = new Vector3(mousePos.x, mousePos.y,50);
+    void loadTile(int palitte ,Tile NewTile, TileBase NewTileBase)
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = new Vector3(mousePos.x, mousePos.y, 50);
         Vector3Int cellPosition = gridLayout.WorldToCell(mousePos);
-       // level[MapI.curentPalitte].ClearAllTiles();
-        level[MapI.curentPalitte].SetTile(cellPosition, mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile);
+        // level[MapI.curentPalitte].ClearAllTiles();
+
+        if (NewTile != null)
+        {
+            mapData.level[palitte].SetTile(cellPosition, NewTile);
+        }
+        else
+        {
+            mapData.level[palitte].SetTile(cellPosition, NewTileBase);
+        }
+
+        mapData.level[palitte].RefreshAllTiles();
+
+    }
+
+    void FixedUpdate()
+    {
+        if (look)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                if (MapI.curentTile != -1)
+                {
+                    TileBase NewTile = mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile;
+                    if (MapI.curentPalitte == 0)
+                    {
+                        loadTile(MapI.curentPalitte,null, NewTile);
+                    }
+                    else if (MapI.curentPalitte == 1)
+                    {
+                        if (MapI.curentTile == WorldBiom)
+                        {
+                            loadTile(MapI.curentPalitte, null, NewTile);
+                        }
+                        else
+                        {
+                            loadTile(MapI.curentPalitte, null, mapData.DataTile[MapI.curentPalitte].Data[WorldBiom].tile);
+                            loadTile(MapI.curentPalitte + 1, null, NewTile);
+                        }
+                    }
+                    else
+                    {
+
+                        loadTile(MapI.curentPalitte+1, null, NewTile);
+
+                    }
+                }
+            }
+        }
+        //if (MapI.curentTile != -1)
+        //{
+        //    if (Input.GetMouseButtonDown(1))
+        //    {
+        //        //if (MapI.curentTile != -1)
+        //        //{
+        //        MapI.curentTile = -1;
+        //    }
+        //}
+        //else 
+        if (Input.GetMouseButton(1))
+        {
+           // MapI.curentTile = -1;
+            if (MapI.curentPalitte == 0)
+            {
+                loadTile(MapI.curentPalitte, nullTile, null);
+            }
+            else
+            if (MapI.curentPalitte == 1)
+            {
+                if (MapI.curentTile == WorldBiom)
+                {
+                    loadTile(MapI.curentPalitte, nullTile, null);
+                    //   loadTile(MapI.curentPalitte, null, NewTile);
+                }
+                else
+                {
+                    loadTile(MapI.curentPalitte+1, nullTile, null);
+                    // loadTile(MapI.curentPalitte, null, mapData.DataTile[MapI.curentPalitte].Data[WorldBiom].tile);
+                    //   loadTile(MapI.curentPalitte + 1, null, NewTile);
+                }
+
+
+                //loadTile(MapI.curentPalitte, nullTile, null);
+                //loadTile(MapI.curentPalitte+1, nullTile, null);
+            }
+            else
+            {
+                loadTile(MapI.curentPalitte + 1, nullTile, null);
+            }
+            //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //mousePos = new Vector3(mousePos.x, mousePos.y, 50);
+            //Vector3Int cellPosition = gridLayout.WorldToCell(mousePos);
+            //mapData.level[MapI.curentPalitte].SetTile(cellPosition, nullTile);
+            //mapData.level[MapI.curentPalitte].RefreshAllTiles();
+
+
+            //   SetTile(cellPosition, mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile);
+        }
+
+
         //int a = 1920;
         //int b = 1080;
         //float fg = a/ b;

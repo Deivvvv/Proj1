@@ -12,7 +12,10 @@ public class MapInterfase : MonoBehaviour
      */
 
  //   [SerializeField]
+
     private MapData mapData;
+    [SerializeField]
+    private SaveMenager saveMenager;
 
     [SerializeField]
     private GameObject palliteWindow;
