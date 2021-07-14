@@ -29,11 +29,11 @@ public class CoreGenerator : MonoBehaviour
         mapData = GetComponent<MapData>();
 
 
-        mapData.level = new Tilemap[6];
-        for (int i = 0; i < mapData.level.Length; i++)
-        {
-            AddGrid(i);
-        }
+        //mapData.level = new Tilemap[6];
+        //for (int i = 0; i < mapData.level.Length; i++)
+        //{
+        //    AddGrid(i);
+        //}
 
         Generate();
     }
@@ -46,15 +46,15 @@ public class CoreGenerator : MonoBehaviour
        // mapData.level[a].SetTile(D, mapData.DataTile[b].Data[c].tile );
     }
 
-    void AddGrid(int i)
-    {
-        GameObject GO = Instantiate(grid);
-        GO.transform.SetParent( gridLayout.transform);
-        GO.name = "Grid" + i;
+    //void AddGrid(int i)
+    //{
+    //    GameObject GO = Instantiate(grid);
+    //    GO.transform.SetParent( gridLayout.transform);
+    //    GO.name = "Grid" + i;
 
-        GO.GetComponent<TilemapRenderer>().sortingOrder = i;
-        mapData.level[i] = GO.GetComponent<Tilemap>();
-    }
+    //    GO.GetComponent<TilemapRenderer>().sortingOrder = i;
+    //    mapData.level[i] = GO.GetComponent<Tilemap>();
+    //}
    public void Generate()
     {
         for (int iz = 0; iz < mapData.level.Length; iz++)

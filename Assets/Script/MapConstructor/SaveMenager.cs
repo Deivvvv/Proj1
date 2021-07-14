@@ -14,29 +14,41 @@ public class SaveMenager : MonoBehaviour
     private MapRedactor MR;
 
     [SerializeField]
-    private Button origButton;
+    private GameObject origButton;
 
+    [SerializeField]
+    private GameObject window;
 
+    void switchData(int id)
+    {
+        MapI.textField.text = Data.Name[id];
+    }
+    void ButtonsLoad(int i,GameObject go)
+    {
+        go.GetComponent<Button>().onClick.AddListener(() => switchData(i));
+        go.transform.GetChild(0).gameObject.GetComponent<Text>().text = $"{Data.DataTime[i]} | {Data.Name[i]}";
+    }
     public void ReLoadData()
     {//пересчитывает библиотеку
-        //if (palliteWindow.transform.childCount > 0)
-        //{
-        //    for (int i = palliteWindow.transform.childCount; i > 0; i--)
-        //    {
-        //        Destroy(palliteWindow.transform.GetChild(i - 1).gameObject);
-        //    }
-        //}
+
+        if (window.transform.childCount > 0)
+        {
+            for (int i = window.transform.childCount; i > 0; i--)
+            {
+                Destroy(window.transform.GetChild(i - 1).gameObject);
+            }
+        }
 
         //if (!palliteMood)
         //{
-        //    for (int i = 0; i < mapData.DataTile[id].Data.Length; i++)
-        //    {
-        //        GameObject go = Instantiate(origButton);
-        //        go.transform.SetParent(palliteWindow.transform);
-        //        ButtonsLoad(i, go);
+        for (int i = 0; i < Data.Name.Count; i++)
+        {
+            GameObject go = Instantiate(origButton);
+            go.transform.SetParent(window.transform);
+            ButtonsLoad(i, go);
 
-        //        go.transform.GetChild(0).GetComponent<Image>().sprite = mapData.DataTile[curentPalitte].Data[i].headSprite;
-        //    }
+          //  go.transform.GetChild(0).GetComponent<Image>().sprite = mapData.DataTile[curentPalitte].Data[i].headSprite;
+        }
         //}
     }
 
@@ -121,6 +133,7 @@ public class SaveMenager : MonoBehaviour
         bytes = Map3.EncodeToPNG();
         File.WriteAllBytes(Application.dataPath + $"/Map/{Name}/Map3.png", bytes);
 
+        ReLoadData();
         //// For testing purposes, also write to a file in the project folder
     }
 
@@ -202,5 +215,6 @@ public class SaveMenager : MonoBehaviour
             MR.TranfMap(Data.WorldBiom[ix], pix1, pix2, pix3, Data.WorldWidth[ix]);
 
         }
+        ReLoadData();
     }
 }

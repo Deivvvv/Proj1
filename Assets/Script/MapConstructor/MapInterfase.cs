@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Tilemaps;
 
 public class MapInterfase : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class MapInterfase : MonoBehaviour
      */
 
     //   [SerializeField]
+    [SerializeField]
+    private GameObject grid;[SerializeField]
+    private GridLayout gridLayout;
+
     [SerializeField]
     private SaveMenager SM;
     private MapRedactor MR;
@@ -30,8 +35,8 @@ public class MapInterfase : MonoBehaviour
     public byte curentPalitte;
     public int curentTile;
 
-    [SerializeField]
-    private InputField textField;
+
+    public InputField textField;
     [SerializeField]
     private Button[] button;
 
@@ -150,6 +155,27 @@ public class MapInterfase : MonoBehaviour
             ButtonsLoad(i);
         }
         PalliteLoad(curentPalitte);
+
+        SM.ReLoadData();
+
+        PreLoad();
+    }
+    void PreLoad()
+    {
+        mapData.level = new Tilemap[6];
+        for (int i = 0; i < mapData.level.Length; i++)
+        {
+            AddGrid(i);
+        }
     }
 
+    void AddGrid(int i)
+    {
+        GameObject GO = Instantiate(grid);
+        GO.transform.SetParent(gridLayout.transform);
+        GO.name = "Grid" + i;
+
+        GO.GetComponent<TilemapRenderer>().sortingOrder = i;
+        mapData.level[i] = GO.GetComponent<Tilemap>();
+    }
 }

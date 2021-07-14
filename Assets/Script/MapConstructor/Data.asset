@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Data
   m_EditorClassIdentifier: 
   Name: []
-  World: 
+  WorldBiom: 
+  WorldWidth: 
+  DataTime: []
