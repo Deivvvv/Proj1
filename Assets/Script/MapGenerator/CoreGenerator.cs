@@ -19,8 +19,8 @@ public class CoreGenerator : MonoBehaviour
 
     public int[] AddBiom;
 
-    public Color[] pix;
-    public Texture2D W;
+   // public Color[] pix;
+ //   public Texture2D W;
     private MapData mapData;
 
     // Start is called before the first frame update
@@ -43,7 +43,7 @@ public class CoreGenerator : MonoBehaviour
     }
     void AddTile(int a, int b, int c, Vector3Int D)
     {
-        mapData.level[a].SetTile(D, mapData.DataTile[b].Data[c].tile );
+       // mapData.level[a].SetTile(D, mapData.DataTile[b].Data[c].tile );
     }
 
     void AddGrid(int i)
@@ -117,11 +117,12 @@ public class CoreGenerator : MonoBehaviour
         }
 
         Texture2D xc = new Texture2D(xChunk, yChunk);
-        Texture2D xc1 = new Texture2D(xChunk, yChunk);
-        Texture2D xc2 = new Texture2D(xChunk, yChunk);
+        //Texture2D xc1 = new Texture2D(xChunk, yChunk);
+        //Texture2D xc2 = new Texture2D(xChunk, yChunk);
         //  xc.filterMode = FilterMode.Point;
-        // Color[] 
-        pix = new Color[xc.width * xc.height];
+        Color[]  pix = new Color[xc.width * xc.height];
+        Color[] pix1 = new Color[xc.width * xc.height];
+        Color[] pix2 = new Color[xc.width * xc.height];
 
 
 
@@ -147,7 +148,7 @@ public class CoreGenerator : MonoBehaviour
 
                 float sample = Mathf.PerlinNoise(xCoord, yCoord);
                 Vector3Int D = new Vector3Int((int)x, (int)y, 50);
-                Color C1 = new Color(WorldWater + 1, 0, 0);
+                Color C1 = new Color(WorldWater / 255f + 0.004f, 0, 0);
 
                 AddTile(0, 0, WorldWater, D);
                 if (sample > 0.7f)
@@ -157,7 +158,7 @@ public class CoreGenerator : MonoBehaviour
                 else
                 {
                     AddTile(1, 1, WorldBiom, D);
-                    C1 = new Color(WorldWater + 1, WorldBiom + 1, 0);
+                    C1 = new Color(WorldWater / 255f + 0.004f, (WorldBiom) / 255f +0.004f, 0);
                     // C1 = new Color(0, WorldBiom + 1, 0);
                 }
 
@@ -192,12 +193,12 @@ public class CoreGenerator : MonoBehaviour
                     {
                         AddTile(2, 1, AddBiom[0], D);
 
-                        C1 = new Color(pix[i].r, pix[i].g, AddBiom[0]+1);
+                        C1 = new Color(pix[i].r, pix[i].g, (AddBiom[0]+1f) / 255);
                     }
                     else if (sample < 0.3f)
                     {
                         AddTile(2, 1, AddBiom[1], D);
-                        C1 = new Color(pix[i].r, pix[i].g, AddBiom[1] + 1);
+                        C1 = new Color(pix[i].r, pix[i].g, (AddBiom[1] + 1f)/255);
                     }
                 }
                 pix[i] = C1;
@@ -222,7 +223,7 @@ public class CoreGenerator : MonoBehaviour
 
                 float sample = Mathf.PerlinNoise(xCoord, yCoord);
 
-                Color C1 = new Color(pix[i].r, pix[i].g, 0);
+                Color C1 = new Color(0, 0, 0);
                 if (pix[i].g > 0)
                 {
                     if (sample > AllForestCof)
@@ -235,38 +236,49 @@ public class CoreGenerator : MonoBehaviour
 
 
                             if (50 < cof1)
-                                AddForest(WorldBiom, D);
+                            {
+                               // AddForest(WorldBiom, D);
+
+                                C1 = new Color((WorldBiom + 1f) / 255f, 0, 0);
+                            }
 
                         }
                         else
                         {
-                            int id = (int)(pix[i].b) - 1;
+                            int id = (int)(pix[i].b)*255;
 
                             cof1 = (int)Random.Range(50 * ForestCof[id], 100);
 
                             if (50 < cof1)
-                                AddForest(id, D);
+                            {
+                                C1 = new Color(pix[i].b, 0, 0);
+                                //Debug.Log(pix[i]);
+                                //Debug.Log(C1);
+                                //Debug.Log((pix[i].b) * 255);
+                                //Debug.Log(id);
+                                //AddForest(id, D);
+                            }
                         }
                     }
                 }
 
-                pix[i] = C1;
+                pix1[i] = C1;
                 x++;
                 i++;
             }
             y++;
         }
-        xc1.SetPixels(pix);
-        xc1.Apply();
+        //xc1.SetPixels(pix);
+        //xc1.Apply();
 
 
-        gameObject.GetComponent<MapRedactor>().TranfMap(WorldBiom,xc,xc1,xc2);
+        gameObject.GetComponent<MapRedactor>().TranfMap(WorldBiom, pix, pix1, pix2, xChunk);
 
-        for (int iz = 0; iz < mapData.level.Length; iz++)
-        {
+        //for (int iz = 0; iz < mapData.level.Length; iz++)
+        //{
 
-            mapData.level[iz].RefreshAllTiles();
-        }
+        //    mapData.level[iz].RefreshAllTiles();
+        //}
     }
 
    

@@ -6,5 +6,7 @@ using UnityEngine;
 public class MapCase : ScriptableObject
 {
     public List<string> Name;
-    public List<int> World;
+    public List<int> WorldBiom;
+    public List<int> WorldWidth;
+    public List<string> DataTime;
 }

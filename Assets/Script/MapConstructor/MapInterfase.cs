@@ -11,8 +11,10 @@ public class MapInterfase : MonoBehaviour
      
      */
 
- //   [SerializeField]
-
+    //   [SerializeField]
+    [SerializeField]
+    private SaveMenager SM;
+    private MapRedactor MR;
     private MapData mapData;
     [SerializeField]
     private SaveMenager saveMenager;
@@ -28,6 +30,8 @@ public class MapInterfase : MonoBehaviour
     public byte curentPalitte;
     public int curentTile;
 
+    [SerializeField]
+    private InputField textField;
     [SerializeField]
     private Button[] button;
 
@@ -77,9 +81,14 @@ public class MapInterfase : MonoBehaviour
     private void PressButtonTile(int id)
     {
         curentTile = id;
-        curentTileImage.sprite = mapData.DataTile[curentPalitte].Data[curentTile].headSprite;
+       // curentTileImage.sprite = mapData.DataTile[curentPalitte].Data[curentTile].headSprite;
     }
 
+
+    public void Save(int wb, Color[] M1, Color[] M2, Color[] M3, int w) 
+    {
+        SM.Save(textField.text,M1,M2,M3,w,wb);
+    }
     private void PressButton(int id)
     {
         switch(id)
@@ -91,18 +100,35 @@ public class MapInterfase : MonoBehaviour
                 palliteMood = true;
                 break;
             case (2):
-                curentPalitte = 0;//BG tail
+
+                if (textField.text != "")
+                    MR.Save();
+
                 break;
             case (3):
-                curentPalitte = 1;//RiverTail
+
+                if(textField.text !="") 
+                    SM.Load(textField.text);
+
                 break;
             case (4):
-                curentPalitte = 2;//RoadTail
+                if (textField.text != "")
+                    SM.Del(textField.text);
+
                 break;
             case (5):
-                curentPalitte = 3;//TowerTail
+                curentPalitte = 0;//BG tail
                 break;
             case (6):
+                curentPalitte = 1;//RiverTail
+                break;
+            case (7):
+                curentPalitte = 2;//RoadTail
+                break;
+            case (8):
+                curentPalitte = 3;//TowerTail
+                break;
+            case (9):
                 curentPalitte = 4;//TowerTail
                 break;
             //case (7):
@@ -116,6 +142,8 @@ public class MapInterfase : MonoBehaviour
     void Start()
     {
         mapData  = GetComponent<MapData>();
+        MR = GetComponent<MapRedactor>();
+        SM = GetComponent<SaveMenager>();
         Application.targetFrameRate = 30;
         for (int i =0; i < button.Length; i++)
         {

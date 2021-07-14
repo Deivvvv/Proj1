@@ -15,19 +15,20 @@ public class MapRedactor : MonoBehaviour
     private Tilemap[] level;
 
 
-    public GridLayout gridLayout;
-    public int x;
-    public int y;
-    public float cell =0.8659766f;
+    [SerializeField]
+    private GridLayout gridLayout;
     [SerializeField]
     private Tile nullTile;
 
 
+    [SerializeField]
     private int WorldBiom;
 
-    private Texture2D Map1;
-    private Texture2D Map2;
-    private Texture2D Map3;
+    [SerializeField]
+    private int width;
+    private Color[] Map1;
+    private Color[] Map2;
+    private Color[] Map3;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,47 +41,139 @@ public class MapRedactor : MonoBehaviour
         look = !key;
     }
 
-    public void PushMap()
+    public void Save()
     {
-
+        MapI.Save(WorldBiom,Map1,Map2,Map3,width);
     }
-    public void TranfMap(int w, Texture2D M1, Texture2D M2, Texture2D M3)
+
+    //load
+    public void TranfMap(int wb, Color[] M1, Color[] M2, Color[] M3, int w)
     {
-        WorldBiom = w;
+        width = w;
+        WorldBiom = wb;
+        Map1 = new Color[M1.Length];
+        Map2 = new Color[M1.Length];
+        Map3 = new Color[M1.Length];
         Map1 = M1;
         Map2 = M2;
         Map3 = M3;
+
+        for (int i = 0; i < mapData.level.Length; i++)
+        {
+            mapData.level[i].ClearAllTiles();
+        }
+
+        for (int i =0;i < Map1.Length; i++)
+        {
+          //  Debug.Log(Map1[i]);
+            Vector3Int cellPosition = new Vector3Int(i % w, i / w, 50);
+            if (Map1[i].r > 0)
+            {
+                //Debug.Log(Map1.Length);
+                //Debug.Log(i);
+                //Debug.Log(cellPosition);
+                mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)((Map1[i].r-0.004f) * 255)].tile);
+             //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            }
+            if (Map1[i].g > 0)
+            {
+                mapData.level[1].SetTile(cellPosition, mapData.DataTile[1].Data[(int)((Map1[i].g - 0.004f) * 255)].tile);
+                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            }
+            if (Map1[i].b > 0)
+            {
+                //Debug.Log(Map1[i].g);
+                //Debug.Log(Map1[i].b);
+                mapData.level[2].SetTile(cellPosition, mapData.DataTile[1].Data[(int)((Map1[i].b - 0.004f) * 255)].tile);
+                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            }
+
+            if (Map2[i].r > 0)
+            {
+                //Debug.Log(Map2[i].r);
+                //Debug.Log(mapData.DataTile[4].Data[(int)(Map2[i].r-1)].tile);
+                mapData.level[5].SetTile(cellPosition, mapData.DataTile[4].Data[(int)((Map2[i].r - 0.004f) * 255)].tile);
+                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            }
+            if (Map2[i].g > 0)
+            {
+                mapData.level[3].SetTile(cellPosition, mapData.DataTile[2].Data[(int)((Map2[i].g - 0.004f) * 255)].tile);
+                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            }
+            if (Map2[i].b > 0)
+            {
+                mapData.level[4].SetTile(cellPosition, mapData.DataTile[3].Data[(int)((Map2[i].b - 0.004f) * 255)].tile);
+                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            }
+        }
+
+
+        for (int i = 0; i < mapData.level.Length; i++)
+        {
+
+            mapData.level[i].RefreshAllTiles();
+        }
     }
     // Update is called once per frame
 
 
     void loadTile(int palitte ,Tile NewTile, TileBase NewTileBase)
     {
+
+
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos = new Vector3(mousePos.x, mousePos.y, 50);
         Vector3Int cellPosition = gridLayout.WorldToCell(mousePos);
-        // level[MapI.curentPalitte].ClearAllTiles();
 
-    //    int id = Vector3Int.x Map1.width
-
-
-        if (NewTile != null)
+        int id = cellPosition[1] * width + cellPosition[0];
+        if (id < Map1.Length)
         {
-            mapData.level[palitte].SetTile(cellPosition, NewTile);
+            if (cellPosition[0] >= 0)
+            {
+                if (cellPosition[1] >= 0)
+                {
+                    // level[MapI.curentPalitte].ClearAllTiles();
+
+                    //    int id = Vector3Int.x Map1.width
+
+
+                    if (NewTile != null)
+                    {
+                        mapData.level[palitte].SetTile(cellPosition, NewTile);
+                    }
+                    else
+                    {
+                        mapData.level[palitte].SetTile(cellPosition, NewTileBase);
+                    }
+
+                    mapData.level[palitte].RefreshAllTiles();
+
+                    //  sourceTex.GetPixels(x, y, width, height);
+                switch (palitte)
+                {
+                    case (0):
+                        Map1[id] = new Color((MapI.curentTile)/255f +0.008f, Map1[id].g, Map1[id].b);
+                        break;
+                    case (1):
+                        Map1[id] = new Color(Map1[id].r, (MapI.curentTile) / 255f + 0.008f, Map1[id].b);
+                        break;
+                    case (2):
+                        Map1[id] = new Color(Map1[id].r, Map1[id].g, (MapI.curentTile) / 255f + 0.008f);
+                        break;
+                    case (5):
+                        Map2[id] = new Color((MapI.curentTile) / 255f + 0.008f, Map2[id].g, Map2[id].b);
+                        break;
+                    case (3):
+                        Map2[id] = new Color(Map2[id].r, (MapI.curentTile) / 255f + 0.008f, Map2[id].b);
+                        break;
+                    case (4):
+                        Map2[id] = new Color(Map2[id].r, Map2[id].g, (MapI.curentTile) / 255f + 0.008f);
+                        break;
+                }
+            }
         }
-        else
-        {
-            mapData.level[palitte].SetTile(cellPosition, NewTileBase);
         }
 
-        mapData.level[palitte].RefreshAllTiles();
-
-        Color col = new Color(0, 0, 0);
-
-        if (palitte < 3)
-        {
-          //  Map1.SetPixels();
-        }
     }
 
     void FixedUpdate()
@@ -118,16 +211,7 @@ public class MapRedactor : MonoBehaviour
                 }
             }
         }
-        //if (MapI.curentTile != -1)
-        //{
-        //    if (Input.GetMouseButtonDown(1))
-        //    {
-        //        //if (MapI.curentTile != -1)
-        //        //{
-        //        MapI.curentTile = -1;
-        //    }
-        //}
-        //else 
+
         if (Input.GetMouseButton(1))
         {
            // MapI.curentTile = -1;
@@ -158,88 +242,7 @@ public class MapRedactor : MonoBehaviour
             {
                 loadTile(MapI.curentPalitte + 1, nullTile, null);
             }
-            //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //mousePos = new Vector3(mousePos.x, mousePos.y, 50);
-            //Vector3Int cellPosition = gridLayout.WorldToCell(mousePos);
-            //mapData.level[MapI.curentPalitte].SetTile(cellPosition, nullTile);
-            //mapData.level[MapI.curentPalitte].RefreshAllTiles();
 
-
-            //   SetTile(cellPosition, mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile);
         }
-
-
-        //int a = 1920;
-        //int b = 1080;
-        //float fg = a/ b;
-        //Debug.Log($"{fg} =   {Screen.width}/ {Screen.height}");
-        //Vector3 mousePos =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Vector3Int mousePos1 = new Vector3Int(Mathf.RoundToInt(mousePos.y), Mathf.RoundToInt((mousePos.x * fg)), 50);
-        //  Vector3 mousePos1 = new Vector3(mousePos.x, mousePos.y, 50);
-
-
-
-
-        /////https://habr.com/ru/post/147082/
-        ///
-
-        //    level[MapI.curentPalitte].ClearAllTiles();
-        //   level[MapI.curentPalitte].SetTile(mousePos1, mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile);
-        //  Ghost.transform.position = mousePos1;//Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //   RaycastHit hit;
-        ////   Vector3Int mousePos1 = new Vector3Int(0, 0, 0);
-        ////   Vector3 objectHit;
-        //   Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        //   Debug.Log(ray.GetPoint);
-        //   hit = Physics.Raycast(ray);
-        //   if (Physics.Raycast(ray, out hit))
-        //   {
-        //       Vector3Int mousePos1 = new Vector3Int(
-        //         Mathf.RoundToInt(hit.transform.position.x),///(int)(mousePos.x - 0.2f),
-        //        Mathf.RoundToInt(hit.transform.position.y)//(int)(mousePos.y - 0.5f)
-        //         , 50);
-        //       Ghost.transform.position = mousePos1;
-        //       //    objectHit = hit.transform.position;
-        //   }
-        //  int x =
-        //  Mathf.Round(float f)
-
-
-        //   Ghost.transform.position = mousePos1;//Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        //////if (Input.GetMouseButtonDown(0))
-        //////{
-        //////    RaycastHit hit;\
-        //////    Debug.Log(ray);
-        //////    if (Physics.Raycast(ray, out hit))
-        //////    {
-
-        //////        Transform objectHit = hit.transform;
-        //////        Debug.Log(objectHit);
-        //////    }
-
-        //////}
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    st = !st;
-        //}
-        //    if (st)
-        //{
-        //    Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
-        //    Vector3Int mousePos1 = new Vector3Int((int)(mousePos.x - 0.2f), (int)(mousePos.y - 0.5f), 50);
-        //    x = (int)mousePos.y;
-        //    y = (int)mousePos.x;
-        //    Ghost.transform.position = new Vector3Int((int)(mousePos.x -0.3f), (int)(mousePos.y +0.5f), 50);//Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //                                                                                                    // Debug.Log($"{x}  {y}");
-        //    if (Input.GetMouseButtonDown(0))
-        //    {
-        //        mousePos1 = new Vector3Int(x, y, 50);
-        //        // .. Debug.Log($"{x}  {y}");
-        //        level[MapI.curentPalitte].SetTile(mousePos1, mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile);
-
-
-        //        //   .thisTile = mapData.DataTile[MapI.curentPalitte].Data[curentTile].tile;
-        //    }
-        //}
     }
 }
