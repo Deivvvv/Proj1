@@ -138,9 +138,9 @@ public class MapInterfase : MonoBehaviour
             case (9):
                 curentPalitte = 4;//TowerTail
                 break;
-            //case (7):
-            //    curentPalitte = 5;//TowerTail
-            //    break;
+            case (10):
+                curentPalitte = 5;//TowerTail
+                break;
 
         }
         PalliteLoad(curentPalitte);
@@ -165,7 +165,7 @@ public class MapInterfase : MonoBehaviour
     }
     void PreLoad()
     {
-        mapData.level = new Tilemap[6];
+        mapData.level = new Tilemap[9];
         for (int i = 0; i < mapData.level.Length; i++)
         {
             AddGrid(i);

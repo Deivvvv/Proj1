@@ -29,7 +29,7 @@ public class CoreGenerator : MonoBehaviour
         mapData = GetComponent<MapData>();
 
 
-        mapData.level = new Tilemap[6];
+        mapData.level = new Tilemap[9];
         for (int i = 0; i < mapData.level.Length; i++)
         {
             AddGrid(i);

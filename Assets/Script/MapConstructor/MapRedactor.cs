@@ -176,6 +176,7 @@ public class MapRedactor : MonoBehaviour
                         case (2):
                             Map1[id] = new Color(Map1[id].r, Map1[id].g, i);
                             break;
+
                         case (5):
                             Map2[id] = new Color(i, Map2[id].g, Map2[id].b);
                             break;
@@ -184,6 +185,16 @@ public class MapRedactor : MonoBehaviour
                             break;
                         case (4):
                             Map2[id] = new Color(Map2[id].r, Map2[id].g, i);
+                            break;
+
+                        case (6):
+                            Map3[id] = new Color(i, Map3[id].g, Map3[id].b);
+                            break;
+                        case (7):
+                            Map3[id] = new Color(Map3[id].r, i, Map3[id].b);
+                            break;
+                        case (8):
+                            Map3[id] = new Color(Map3[id].r, Map3[id].g, i);
                             break;
                     }
                 }
@@ -228,37 +239,38 @@ public class MapRedactor : MonoBehaviour
                         }
                     }
                 }
-            }
 
-            if (Input.GetMouseButton(1))
-            {
-                // MapI.curentTile = -1;
-                if (MapI.curentPalitte == 0)
+
+                if (Input.GetMouseButton(1))
                 {
-                    loadTile(MapI.curentPalitte, nullTile, null);
-                }
-                else
-                if (MapI.curentPalitte == 1)
-                {
-                    if (MapI.curentTile == WorldBiom)
+                    // MapI.curentTile = -1;
+                    if (MapI.curentPalitte == 0)
                     {
                         loadTile(MapI.curentPalitte, nullTile, null);
-                        //   loadTile(MapI.curentPalitte, null, NewTile);
+                    }
+                    else
+                    if (MapI.curentPalitte == 1)
+                    {
+                        if (MapI.curentTile == WorldBiom)
+                        {
+                            loadTile(MapI.curentPalitte, nullTile, null);
+                            //   loadTile(MapI.curentPalitte, null, NewTile);
+                        }
+                        else
+                        {
+                            loadTile(MapI.curentPalitte + 1, nullTile, null);
+                            // loadTile(MapI.curentPalitte, null, mapData.DataTile[MapI.curentPalitte].Data[WorldBiom].tile);
+                            //   loadTile(MapI.curentPalitte + 1, null, NewTile);
+                        }
+
+
+                        //loadTile(MapI.curentPalitte, nullTile, null);
+                        //loadTile(MapI.curentPalitte+1, nullTile, null);
                     }
                     else
                     {
                         loadTile(MapI.curentPalitte + 1, nullTile, null);
-                        // loadTile(MapI.curentPalitte, null, mapData.DataTile[MapI.curentPalitte].Data[WorldBiom].tile);
-                        //   loadTile(MapI.curentPalitte + 1, null, NewTile);
                     }
-
-
-                    //loadTile(MapI.curentPalitte, nullTile, null);
-                    //loadTile(MapI.curentPalitte+1, nullTile, null);
-                }
-                else
-                {
-                    loadTile(MapI.curentPalitte + 1, nullTile, null);
                 }
 
             }
