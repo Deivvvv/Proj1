@@ -29,11 +29,11 @@ public class CoreGenerator : MonoBehaviour
         mapData = GetComponent<MapData>();
 
 
-        //mapData.level = new Tilemap[6];
-        //for (int i = 0; i < mapData.level.Length; i++)
-        //{
-        //    AddGrid(i);
-        //}
+        mapData.level = new Tilemap[6];
+        for (int i = 0; i < mapData.level.Length; i++)
+        {
+            AddGrid(i);
+        }
 
         Generate();
     }
@@ -46,16 +46,16 @@ public class CoreGenerator : MonoBehaviour
        // mapData.level[a].SetTile(D, mapData.DataTile[b].Data[c].tile );
     }
 
-    //void AddGrid(int i)
-    //{
-    //    GameObject GO = Instantiate(grid);
-    //    GO.transform.SetParent( gridLayout.transform);
-    //    GO.name = "Grid" + i;
+    void AddGrid(int i)
+    {
+        GameObject GO = Instantiate(grid);
+        GO.transform.SetParent(gridLayout.transform);
+        GO.name = "Grid" + i;
 
-    //    GO.GetComponent<TilemapRenderer>().sortingOrder = i;
-    //    mapData.level[i] = GO.GetComponent<Tilemap>();
-    //}
-   public void Generate()
+        GO.GetComponent<TilemapRenderer>().sortingOrder = i;
+        mapData.level[i] = GO.GetComponent<Tilemap>();
+    }
+    public void Generate()
     {
         for (int iz = 0; iz < mapData.level.Length; iz++)
         {
@@ -148,7 +148,7 @@ public class CoreGenerator : MonoBehaviour
 
                 float sample = Mathf.PerlinNoise(xCoord, yCoord);
                 Vector3Int D = new Vector3Int((int)x, (int)y, 50);
-                Color C1 = new Color(WorldWater / 255f + 0.004f, 0, 0);
+                Color C1 = new Color(WorldWater +1, 0, 0);
 
                 AddTile(0, 0, WorldWater, D);
                 if (sample > 0.7f)
@@ -158,7 +158,7 @@ public class CoreGenerator : MonoBehaviour
                 else
                 {
                     AddTile(1, 1, WorldBiom, D);
-                    C1 = new Color(WorldWater / 255f + 0.004f, (WorldBiom) / 255f +0.004f, 0);
+                    C1 = new Color(WorldWater + 1, (WorldBiom) +1, 0);
                     // C1 = new Color(0, WorldBiom + 1, 0);
                 }
 
@@ -193,12 +193,12 @@ public class CoreGenerator : MonoBehaviour
                     {
                         AddTile(2, 1, AddBiom[0], D);
 
-                        C1 = new Color(pix[i].r, pix[i].g, (AddBiom[0]+1f) / 255);
+                        C1 = new Color(pix[i].r, pix[i].g, (AddBiom[0]+1f));
                     }
                     else if (sample < 0.3f)
                     {
                         AddTile(2, 1, AddBiom[1], D);
-                        C1 = new Color(pix[i].r, pix[i].g, (AddBiom[1] + 1f)/255);
+                        C1 = new Color(pix[i].r, pix[i].g, (AddBiom[1] + 1f));
                     }
                 }
                 pix[i] = C1;
@@ -239,13 +239,13 @@ public class CoreGenerator : MonoBehaviour
                             {
                                // AddForest(WorldBiom, D);
 
-                                C1 = new Color((WorldBiom + 1f) / 255f, 0, 0);
+                                C1 = new Color((WorldBiom + 1f), 0, 0);
                             }
 
                         }
                         else
                         {
-                            int id = (int)(pix[i].b)*255;
+                            int id = (int)(pix[i].b-1);
 
                             cof1 = (int)Random.Range(50 * ForestCof[id], 100);
 

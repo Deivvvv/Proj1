@@ -92,11 +92,13 @@ public class MapInterfase : MonoBehaviour
 
     public void Save(int wb, Color[] M1, Color[] M2, Color[] M3, int w) 
     {
+        Debug.Log(M1[1]);
         SM.Save(textField.text,M1,M2,M3,w,wb);
     }
     private void PressButton(int id)
     {
-        switch(id)
+        curentTile = 0;
+        switch (id)
         {
             case (0):
                 palliteMood = false;
@@ -158,7 +160,8 @@ public class MapInterfase : MonoBehaviour
 
         SM.ReLoadData();
 
-        PreLoad();
+        if(GetComponent<CoreGenerator>().enabled != true) 
+            PreLoad();
     }
     void PreLoad()
     {

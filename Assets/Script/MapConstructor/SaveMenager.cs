@@ -13,6 +13,7 @@ public class SaveMenager : MonoBehaviour
     [SerializeField]
     private MapRedactor MR;
 
+    int colorSize = 255;
     [SerializeField]
     private GameObject origButton;
 
@@ -23,11 +24,14 @@ public class SaveMenager : MonoBehaviour
     {
         MapI.textField.text = Data.Name[id];
     }
-    void ButtonsLoad(int i,GameObject go)
+    void ButtonsLoad(int i, GameObject go)
     {
         go.GetComponent<Button>().onClick.AddListener(() => switchData(i));
         go.transform.GetChild(0).gameObject.GetComponent<Text>().text = $"{Data.DataTime[i]} | {Data.Name[i]}";
     }
+
+
+
     public void ReLoadData()
     {//пересчитывает библиотеку
 
@@ -54,6 +58,14 @@ public class SaveMenager : MonoBehaviour
 
     public void Save(string Name, Color[] M1, Color[] M2, Color[] M3, int w, int wb)
     {
+        for(int i =0;i< M1.Length; i++)
+        {
+            M1[i] = new Color(M1[i].r /colorSize, M1[i].g / colorSize, M1[i].b / colorSize);
+            M2[i] = new Color(M2[i].r / colorSize, M2[i].g / colorSize, M2[i].b / colorSize);
+            M3[i] = new Color(M3[i].r / colorSize, M3[i].g / colorSize, M3[i].b / colorSize);
+        }
+
+
         var currentDate = System.DateTime.Now;
         string date = "";
         date += currentDate.Day.ToString();
@@ -117,7 +129,7 @@ public class SaveMenager : MonoBehaviour
         Map2.SetPixels(M2);
         Map3.SetPixels(M3);
 
-        Debug.Log(M1[15]);
+       // Debug.Log(M1[15]);
 
 
         Map1.Apply();
@@ -134,7 +146,12 @@ public class SaveMenager : MonoBehaviour
         File.WriteAllBytes(Application.dataPath + $"/Map/{Name}/Map3.png", bytes);
 
         ReLoadData();
-        //// For testing purposes, also write to a file in the project folder
+        for (int i = 0; i < M1.Length; i++)
+        {
+            M1[i] = new Color(Mathf.RoundToInt(M1[i].r * colorSize), Mathf.RoundToInt(M1[i].g * colorSize), Mathf.RoundToInt(M1[i].b * colorSize));
+            M2[i] = new Color(Mathf.RoundToInt(M2[i].r * colorSize), Mathf.RoundToInt(M2[i].g * colorSize), Mathf.RoundToInt(M2[i].b * colorSize));
+            M3[i] = new Color(Mathf.RoundToInt(M3[i].r * colorSize), Mathf.RoundToInt(M3[i].g * colorSize), Mathf.RoundToInt(M3[i].b * colorSize));
+        }
     }
 
     public void Del(string Name)
@@ -199,7 +216,7 @@ public class SaveMenager : MonoBehaviour
             noiseTex.Apply();
             Color[] pix1 = noiseTex.GetPixels(0, 0, noiseTex.width, noiseTex.height);
 
-            Debug.Log(pix1[15]);
+           // Debug.Log(pix1[15]);
 
 
             img = File.ReadAllBytes(Application.dataPath + $"/Map/{Name}/Map2.png");
@@ -211,6 +228,14 @@ public class SaveMenager : MonoBehaviour
             noiseTex.LoadImage(img);
             noiseTex.Apply();
             Color[] pix3 = noiseTex.GetPixels(0, 0, noiseTex.width, noiseTex.height);
+
+            for (int i = 0; i < pix1.Length; i++)
+            {
+                pix1[i] = new Color(Mathf.RoundToInt(pix1[i].r * colorSize), Mathf.RoundToInt(pix1[i].g * colorSize), Mathf.RoundToInt(pix1[i].b * colorSize));
+                pix2[i] = new Color(Mathf.RoundToInt(pix2[i].r * colorSize), Mathf.RoundToInt(pix2[i].g * colorSize), Mathf.RoundToInt(pix2[i].b * colorSize));
+                pix3[i] = new Color(Mathf.RoundToInt(pix3[i].r * colorSize), Mathf.RoundToInt(pix3[i].g * colorSize), Mathf.RoundToInt(pix3[i].b * colorSize));
+            }
+           // Debug.Log(pix1[15]);
 
             MR.TranfMap(Data.WorldBiom[ix], pix1, pix2, pix3, Data.WorldWidth[ix]);
 

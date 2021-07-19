@@ -20,7 +20,6 @@ public class MapRedactor : MonoBehaviour
     [SerializeField]
     private Tile nullTile;
 
-
     [SerializeField]
     private int WorldBiom;
 
@@ -67,42 +66,51 @@ public class MapRedactor : MonoBehaviour
         {
           //  Debug.Log(Map1[i]);
             Vector3Int cellPosition = new Vector3Int(i % w, i / w, 50);
+            int id = 0;
             if (Map1[i].r > 0)
             {
-                Debug.Log(Map1.Length);
-                Debug.Log(i);
-                Debug.Log(cellPosition);
-                mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)((Map1[i].r-0.004f) * 255)].tile);
+                id = (int)Map1[i].r - 1;
+                //Debug.Log(Map1.Length);
+                //Debug.Log(i);
+                //Debug.Log(cellPosition);
+                //Debug.Log(Map1[i].r);
+                //Debug.Log(Map1[i].r);
+                mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[id].tile);
              //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
             }
             if (Map1[i].g > 0)
             {
+               // id = (int)Map1[i].g - 1;
                 mapData.level[1].SetTile(cellPosition, mapData.DataTile[1].Data[WorldBiom].tile);
                 //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
             }
             if (Map1[i].b > 0)
             {
+                id = (int)Map1[i].b - 1;
                 //Debug.Log(Map1[i].g);
                 //Debug.Log(Map1[i].b);
-                mapData.level[2].SetTile(cellPosition, mapData.DataTile[1].Data[(int)((Map1[i].b - 0.004f) * 255)].tile);
+                mapData.level[2].SetTile(cellPosition, mapData.DataTile[1].Data[id].tile);
                 //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
             }
 
             if (Map2[i].r > 0)
             {
+                id = (int)Map2[i].r - 1;
                 //Debug.Log(Map2[i].r);
                 //Debug.Log(mapData.DataTile[4].Data[(int)(Map2[i].r-1)].tile);
-                mapData.level[5].SetTile(cellPosition, mapData.DataTile[4].Data[(int)((Map2[i].r - 0.004f) * 255)].tile);
+                mapData.level[5].SetTile(cellPosition, mapData.DataTile[4].Data[id].tile);
                 //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
             }
             if (Map2[i].g > 0)
             {
-                mapData.level[3].SetTile(cellPosition, mapData.DataTile[2].Data[(int)((Map2[i].g - 0.004f) * 255)].tile);
+                id = (int)Map2[i].g - 1;
+                mapData.level[3].SetTile(cellPosition, mapData.DataTile[2].Data[id].tile);
                 //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
             }
             if (Map2[i].b > 0)
             {
-                mapData.level[4].SetTile(cellPosition, mapData.DataTile[3].Data[(int)((Map2[i].b - 0.004f) * 255)].tile);
+                id = (int)Map2[i].b - 1;
+                mapData.level[4].SetTile(cellPosition, mapData.DataTile[3].Data[id].tile);
                 //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
             }
         }
@@ -149,28 +157,36 @@ public class MapRedactor : MonoBehaviour
                     mapData.level[palitte].RefreshAllTiles();
 
                     //  sourceTex.GetPixels(x, y, width, height);
-                switch (palitte)
-                {
-                    case (0):
-                        Map1[id] = new Color((MapI.curentTile)/255f +0.008f, Map1[id].g, Map1[id].b);
-                        break;
-                    case (1):
-                        Map1[id] = new Color(Map1[id].r, (MapI.curentTile) / 255f + 0.008f, Map1[id].b);
-                        break;
-                    case (2):
-                        Map1[id] = new Color(Map1[id].r, Map1[id].g, (MapI.curentTile) / 255f + 0.008f);
-                        break;
-                    case (5):
-                        Map2[id] = new Color((MapI.curentTile) / 255f + 0.008f, Map2[id].g, Map2[id].b);
-                        break;
-                    case (3):
-                        Map2[id] = new Color(Map2[id].r, (MapI.curentTile) / 255f + 0.008f, Map2[id].b);
-                        break;
-                    case (4):
-                        Map2[id] = new Color(Map2[id].r, Map2[id].g, (MapI.curentTile) / 255f + 0.008f);
-                        break;
+                    int i = MapI.curentTile + 1;
+                    if (NewTileBase == null)
+                    {
+                        i = 0;
+                    }
+
+
+
+                    switch (palitte)
+                    {
+                        case (0):
+                            Map1[id] = new Color(i, Map1[id].g, Map1[id].b);
+                            break;
+                        case (1):
+                            Map1[id] = new Color(Map1[id].r, i, Map1[id].b);
+                            break;
+                        case (2):
+                            Map1[id] = new Color(Map1[id].r, Map1[id].g, i);
+                            break;
+                        case (5):
+                            Map2[id] = new Color(i, Map2[id].g, Map2[id].b);
+                            break;
+                        case (3):
+                            Map2[id] = new Color(Map2[id].r, i, Map2[id].b);
+                            break;
+                        case (4):
+                            Map2[id] = new Color(Map2[id].r, Map2[id].g, i);
+                            break;
+                    }
                 }
-            }
         }
         }
 
