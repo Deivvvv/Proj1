@@ -782,6 +782,15 @@ MonoBehaviour:
       tile: {fileID: 11400000, guid: ff2a08ed118d45f4aba6f857ab56db50, type: 2}
       TileSpeed: 0
       Tayp: 0
+  - Data:
+    - headSprite: {fileID: 21300000, guid: 258d10be20432354fb5f2d67205aca77, type: 3}
+      tile: {fileID: 11400000, guid: a60f049bb9f5c9645ada41df6ac37b64, type: 2}
+      TileSpeed: 0
+      Tayp: 0
+    - headSprite: {fileID: 21300000, guid: 3f14de830dbcfae469b7d73a043ec561, type: 3}
+      tile: {fileID: 11400000, guid: b1f15b4dbd804704b8c24d7e6fdf2d93, type: 2}
+      TileSpeed: 0
+      Tayp: 0
   level: []
 --- !u!114 &236692007
 MonoBehaviour:
@@ -847,7 +856,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 236692001}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fef81966284021d4fbb499c620b87329, type: 3}
   m_Name: 
@@ -2457,6 +2466,7 @@ GameObject:
   - component: {fileID: 825117048}
   - component: {fileID: 825117050}
   - component: {fileID: 825117049}
+  - component: {fileID: 825117051}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -2523,6 +2533,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825117047}
   m_CullTransparentMesh: 1
+--- !u!114 &825117051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825117047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beda0ed44f322eb4890efaf08c31e75a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &850891021
 GameObject:
   m_ObjectHideFlags: 0
@@ -4287,7 +4309,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1913240376}
-  - component: {fileID: 1913240377}
   m_Layer: 0
   m_Name: Buttons
   m_TagString: Untagged
@@ -4322,18 +4343,6 @@ RectTransform:
   m_AnchoredPosition: {x: -960, y: -540}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1913240377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913240375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beda0ed44f322eb4890efaf08c31e75a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1935720558
 GameObject:
   m_ObjectHideFlags: 0
