@@ -47,7 +47,7 @@ public class GamePlayCore : MonoBehaviour
         List<float> speed = new List<float>();
         //int targX;
         //int targY;
-        Vector3Int targV = gridLayout.WorldToCell(new Vector3Int(0, 0, 50));//new Vector3Int(0, 0, 50);
+        Vector3Int targV = gridLayout.WorldToCell(new Vector3Int(10, 10, 50));//new Vector3Int(0, 0, 50);
 
         //int x = v1[0];
         //int y = v1[1];
@@ -72,54 +72,72 @@ public class GamePlayCore : MonoBehaviour
             2.3    (x, y + 1)
             3.1    (x + 1, y - 1)
             3.2    (x + 1, y)
+
+             public IEnumerable<Vector3Int> GetCellsAround(Vector3Int cell)
+    {
+        yield return new Vector3Int(cell.x, cell.y + 1, cell.z);
+        yield return new Vector3Int(cell.x, cell.y - 1, cell.z);
+        yield return new Vector3Int(cell.x + 1, cell.y, cell.z);
+        yield return new Vector3Int(cell.x - 1, cell.y, cell.z);
+        yield return new Vector3Int(cell.x - 1, cell.y + 1, cell.z);
+        yield return new Vector3Int(cell.x - 1, cell.y - 1, cell.z);
+    }
              */
 
 
-
             if (targV[1] < v3[1])
-            {
+            {//(x+(y+1))
                 targV[1]++;
-                if (v3[0] > v3[1])
-                {
+                if (targV[1] % 2 != 1)
+                {//(x+1+(y+1))
+                    if (targV[0] < v3[0])
+                    {
+                        targV[0]++;
 
-                }else if
+                    }
+                }
+                else //if (targV[1] % 2 == 1)
+                {//(x-1+(y-1))
+                    if (targV[0] > v3[0])
+                    {
+                        targV[0]--;
+
+                    }
+                }
             }
-            else if (targV[1] > v3[1])
-            {
+            else
+            if (targV[1] > v3[1])
+            {//(x+1+(y-1))
                 targV[1]--;
+                if (targV[1] % 2 == 1)
+                {//(x-1+(y-1))
+                    if (targV[0] > v3[0])
+                    {
+                        targV[0]--;
+
+                    }
+                }
+                else //if (targV[1] % 2 != 1)
+                {//(x+1+(y+1))
+                    if (targV[0] < v3[0])
+                    {
+                        targV[0]++;
+
+                    }
+                }
 
             }
+            else if (targV[0] < v3[0])
+            {
+                targV[0]++;
 
-           // if (targV[1] < v3[1]) 
-           // {
-           //     targV[1]++;
-           //     if (targV[0] > v3[0]- v3[1])
-           //     {
-           //         targV[0]--;
+            }
+            else
+           if (targV[0] > v3[0])
+            {
+                targV[0]--;
 
-           //     }
-           // }
-           // else
-           // if (targV[1] > v3[1])
-           // {
-           //     targV[1]--;
-           //     if (targV[0] < v3[0]+ v3[1])
-           //     {
-           //         targV[0]++;
-           //     }
-
-           // }
-           // else if (targV[0] < v3[0])
-           // {
-           //     targV[0]++;
-
-           // }
-           // else
-           //if (targV[0] > v3[0])
-           // {
-           //     targV[0]--;
-
-           // }
+            }
 
             newCor.Add(targV);
             speed.Add(1);
