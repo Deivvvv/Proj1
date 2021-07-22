@@ -121,6 +121,9 @@ public class MapRedactor : MonoBehaviour
 
             mapData.level[i].RefreshAllTiles();
         }
+
+
+        gridLayout.GetComponent<GamePlayCore>().NewMap(Map1,Map2,width);
     }
     // Update is called once per frame
 

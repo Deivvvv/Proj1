@@ -17,14 +17,46 @@ public class GamePlayCore : MonoBehaviour
     private MobAnimator _mobAnimator;
 
 
-    private int[] _mapPix;
+    private int width;
+    [SerializeField]
+    private float[] _mapPix;
     public GameObject Ghost;
     // Start is called before the first frame update
     void Start()
     {
         _time = 0;
     }
+    public void NewMap(Color[] pix1, Color[] pix2, int w)
+    {
+        width = w;
+        _mapPix = new float[pix1.Length];
 
+        for(int i =0;i< pix1.Length; i++)
+        {
+            float f = 10f;
+            if (pix1[i].g > 0)
+                f = 1;
+
+            if (pix2[i].r > 0)
+            {
+                if (pix2[i].b > 0)
+                {
+                    f -= 0.2f;
+
+                }
+                else
+                {
+                    f += 3f;
+                }
+            }
+            else
+            if (pix2[i].b > 0)
+            {
+                f -= 0.4f;
+            }
+            _mapPix[i] = f;
+        }
+    }
 
     void TowerCall()
     {
@@ -83,7 +115,7 @@ public class GamePlayCore : MonoBehaviour
         yield return new Vector3Int(cell.x - 1, cell.y - 1, cell.z);
     }
              */
-
+            float f = 0;
 
             if (targV[1] < v3[1])
             {//(x+(y+1))
@@ -139,8 +171,10 @@ public class GamePlayCore : MonoBehaviour
 
             }
 
+            f = _mapPix[(targV[1] * width + targV[0])];
+
             newCor.Add(targV);
-            speed.Add(1);
+            speed.Add(f);
 
 
         }
