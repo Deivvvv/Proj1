@@ -15,4 +15,10 @@ public class GameplayInterfase : MonoBehaviour
     {
         
     }
+
+
+    public void createArmy()
+    {
+
+    }
 }
