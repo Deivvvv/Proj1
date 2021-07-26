@@ -9,7 +9,7 @@ public class GamePlayCore : MonoBehaviour
     [SerializeField]
     private GridLayout gridLayout;
     private float _time;
-    [SerializeField]
+    //[SerializeField]
     private TowerData[] _òowerData;
     [SerializeField]
     private TowerClassData[] _òowerClassData;
@@ -33,27 +33,28 @@ public class GamePlayCore : MonoBehaviour
 
         for(int i =0;i< pix1.Length; i++)
         {
-            float f = 10f;
-            if (pix1[i].g > 0)
-                f = 1;
+            float f = 0.5f;
+            //  float f = 10f;
+            //if (pix1[i].g > 0)
+            //    f = 1;
 
-            if (pix2[i].r > 0)
-            {
-                if (pix2[i].b > 0)
-                {
-                    f -= 0.2f;
+            //if (pix2[i].r > 0)
+            //{
+            //    if (pix2[i].b > 0)
+            //    {
+            //        f -= 0.2f;
 
-                }
-                else
-                {
-                    f += 3f;
-                }
-            }
-            else
-            if (pix2[i].b > 0)
-            {
-                f -= 0.4f;
-            }
+            //    }
+            //    else
+            //    {
+            //        f += 3f;
+            //    }
+            //}
+            //else
+            //if (pix2[i].b > 0)
+            //{
+            //    f -= 0.4f;
+            //}
             _mapPix[i] = f;
         }
     }
@@ -89,8 +90,8 @@ public class GamePlayCore : MonoBehaviour
         v3 = new Vector3Int(v3[0], v3[1], 50);
         List<Vector3Int> newCor = new List<Vector3Int>();
 
-        Debug.Log(targV);
-        Debug.Log(v3);
+      //  Debug.Log(targV);
+      //  Debug.Log(v3);
         while (targV != v3)
         {
             /*
@@ -178,7 +179,7 @@ public class GamePlayCore : MonoBehaviour
 
 
         }
-        Debug.Log("New");
+      //  Debug.Log("New");
 
         Vector3[] aNewCor = new Vector3[newCor.Count];
         float[] aSpeed = new float[newCor.Count];
@@ -188,12 +189,17 @@ public class GamePlayCore : MonoBehaviour
             //Vector3 v4 = aNewCor[i];
             //aNewCor[i] = new Vector3(v4[1], v4[0], v4[2]);
             aSpeed[i] = speed[i];
-            Debug.Log($"{aNewCor[i]} <= {newCor[i]}");
+            //Debug.Log($"{aNewCor[i]} <= {newCor[i]}");
         }
 
         //Vector3[] aNewCor = newCor.ToArray();
         //float[] aSpeed = speed.ToArray();
-        _mobAnimator.Play(aNewCor,aSpeed, Ghost);
+
+        GameObject GO = Instantiate(Ghost);
+        GO.transform.SetParent(gameObject.transform);
+        GO.name = "Mob";
+
+        GO.GetComponent<MobAnimator>().Play(aNewCor,aSpeed, GO);
         //Debug.Log(newCor.Count);
         //Debug.Log(newCor[0]);
         //  gridLayout
@@ -212,7 +218,10 @@ public class GamePlayCore : MonoBehaviour
           //  Vector3 v1 = new Vector3(0, 0, 0);
         }
     }
+    public void AddTower()
+    {
 
+    }
     void FixedUpdate()
     {
         _time += 0.1f * Time.deltaTime;
@@ -229,12 +238,15 @@ public class GamePlayCore : MonoBehaviour
 public class TowerClassData
 {
     public int[] MaxSolder;
+    public int[] GenerateResource;
+    public int Resource;
+
 
     public TowerDataColor TC;
 }
 [System.Serializable]
 public class TowerDataColor
 {
-    public Tile[] TowerColor;
+    public TileBase[] TowerColor;
 }
 

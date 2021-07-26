@@ -40,6 +40,9 @@ public class MapInterfase : MonoBehaviour
     [SerializeField]
     private Button[] button;
 
+
+    //TowerRedactor
+
     private void ButtonsLoad(int id)
     {
         button[id].onClick.AddListener(() => PressButton(id));

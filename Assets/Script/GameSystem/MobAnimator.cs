@@ -8,7 +8,7 @@ public class MobAnimator : MonoBehaviour
 {
     //private GridLayout gridLayout;
     //public List<Vector3> target;
-
+    private Sequence s;
     //private float speed;
     //private int targetNum;
     // Start is called before the first frame update
@@ -32,39 +32,60 @@ public class MobAnimator : MonoBehaviour
     // Update is called once per frame
    public void Play(Vector3[] target, float[] speed,GameObject GO)//FixedUpdate()
     {
-        var s = DOTween.Sequence();
+       // s.Pause();
+       s.Kill();
+        // GO.transform.Reset();
+        //var 
+        s = DOTween.Sequence();
+      //  s = DOTween.Sequence();
         //var Cube1RunTime = 1.0f;
         //var Cube2RunTime = 1.0f;
 
-        s.Append(GO.transform.DOMove(target[0], speed[0], false));
         Vector3 v = target[0];
-        if (v[0]< GO.transform.position.x)
+        Vector3 v1 = target[1];
+        Vector3 v2 = new Vector3((v[0] + v1[0]) / 2, (v[1] + v1[1]) / 2, 0);
+
+        s.Append(GO.transform.DOMove(v2, speed[0], false));
+
+        float f = speed[0] *0.9f;
+        s.Insert(f, GO.transform.DOMove(target[1], speed[1], false));
+        f += speed[1] * 0.9f;
+
+
+        if (v2[0]< GO.transform.position.x)
         {
-            GO.transform.DOScaleX(-1, 0);
+            GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
         }
         else
         {
-            GO.transform.DOScaleX(1, 0);
+            GO.transform.DOScaleX(GO.transform.localScale.x, 0);
         }
         // s.Append(this.m_Trans.DOLocalMoveX(-3.42f, Cube1RunTime));
-        if (target.Length > 0)
+        if (target.Length > 1)
         {
-            Vector3 v1 = target[0];
-            float f = 0;
-            for (int i = 1; i < target.Length; i++)
+          //  Vector3 v1 = target[0];
+          //  float f = 0;
+            for (int i = 2; i < target.Length; i++)
             {
-                f += speed[i - 1];
-                s.Insert(f, GO.transform.DOMove(target[i], speed[i], false));
-
                 v = target[i - 1];
                 v1 = target[i];
+                v2 = new Vector3((v[0] + v1[0]) / 2, (v[1] + v1[1]) / 2, 0);
+
+                f += speed[i - 1] * 0.9f;
+
+                s.Insert(f, GO.transform.DOMove(v2, speed[i - 1], false));
+
+                f += speed[i] * 0.9f;
+
+                s.Insert(f, GO.transform.DOMove(target[i], speed[i], false));
+
                 if (v[0] < v1[1])
                 {
-                    s.Insert(f, GO.transform.DOScaleX(-1, 0));
+                    s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));
                 }
                 else
                 {
-                    s.Insert(f, GO.transform.DOScaleX(1, 0));
+                    s.Insert(f, GO.transform.DOScaleX(GO.transform.localScale.x, 0));
                 }
             }
         }

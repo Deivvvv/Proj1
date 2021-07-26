@@ -35,6 +35,12 @@ public class CoreGenerator : MonoBehaviour
             AddGrid(i);
         }
 
+        mapData.ColorPlayer = new Tilemap[mapData.Player.Length];
+        for (int i = 0; i < mapData.Player.Length; i++)
+        {
+            AddColorGrid(i);
+        }
+
         Generate();
     }
     void AddForest(int id, Vector3Int D)
@@ -45,7 +51,16 @@ public class CoreGenerator : MonoBehaviour
     {
        // mapData.level[a].SetTile(D, mapData.DataTile[b].Data[c].tile );
     }
+    void AddColorGrid(int i)
+    {
+        GameObject GO = Instantiate(grid);
+        GO.transform.SetParent(gridLayout.transform);
+        GO.name = "Color" + i;
 
+        GO.GetComponent<Tilemap>().color = mapData.Player[i];
+        GO.GetComponent<TilemapRenderer>().sortingOrder = 21+i;
+        mapData.ColorPlayer[i] = GO.GetComponent<Tilemap>();
+    }
     void AddGrid(int i)
     {
         GameObject GO = Instantiate(grid);

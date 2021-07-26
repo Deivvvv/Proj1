@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class MapRedactor : MonoBehaviour
@@ -28,11 +29,23 @@ public class MapRedactor : MonoBehaviour
     private Color[] Map1;
     private Color[] Map2;
     private Color[] Map3;
+
+
+
+    [SerializeField]
+    private Button[] towerButton;
+    [SerializeField]
+    private Button[] towerLevel;
+    [SerializeField]
+    private Text[] text;
+    private int TowerCor =-1;
     // Start is called before the first frame update
     void Start()
     {
         mapData = GetComponent<MapData>();
         MapI = GetComponent<MapInterfase>();
+
+        StartTowerRedactor();
     }
 
     public void LoadKey(bool key)
@@ -113,6 +126,27 @@ public class MapRedactor : MonoBehaviour
                 mapData.level[4].SetTile(cellPosition, mapData.DataTile[3].Data[id].tile);
                 //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
             }
+
+            if (Map3[i].r > 0)
+            {
+                id = (int)Map2[i].r - 1;
+                //Debug.Log(Map2[i].r);
+                //Debug.Log(mapData.DataTile[4].Data[(int)(Map2[i].r-1)].tile);
+                mapData.level[5].SetTile(cellPosition, mapData.DataTile[5].Data[id].tile);
+                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            }
+            if (Map3[i].g > 0)
+            {
+                id = (int)Map2[i].g - 1;
+                mapData.level[3].SetTile(cellPosition, mapData.DataTile[6].Data[id].tile);
+                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            }
+            if (Map3[i].b > 0)
+            {
+                id = (int)Map2[i].b - 1;
+                mapData.level[4].SetTile(cellPosition, mapData.DataTile[7].Data[id].tile);
+                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            }
         }
 
 
@@ -191,7 +225,7 @@ public class MapRedactor : MonoBehaviour
                             break;
 
                         case (6):
-                            Map3[id] = new Color(i, Map3[id].g, Map3[id].b);
+                            Map3[id] = new Color(i, Map2[id].g, Map3[id].b);
                             break;
                         case (7):
                             Map3[id] = new Color(Map3[id].r, i, Map3[id].b);
@@ -206,10 +240,118 @@ public class MapRedactor : MonoBehaviour
 
     }
 
+    void TowerNewColor(int id)
+    {
+      //  Debug.Log(TowerCor);
+        if (TowerCor > -1)
+        {
+            if (TowerCor < 0)
+            {
+                Map3[TowerCor].g = 0;
+            }
+            else
+            {
+                Map3[TowerCor].g = id;
+            }
+            Vector3Int cellPosition = new Vector3Int(TowerCor % width, TowerCor / width, 50);
+           // Debug.Log(cellPosition);
+            TileBase NewTile = mapData.DataTile[6].Data[(int)Map3[TowerCor].r-1].tile;
+            for (int i = 0; i < mapData.ColorPlayer.Length; i++)
+            {if(id == 0)
+                {
+                    mapData.ColorPlayer[i].SetTile(cellPosition, null);
+                }
+                else
+                if (i == id) 
+                {
+                    mapData.ColorPlayer[i].SetTile(cellPosition, NewTile);
+                }
+                else
+                {
+                    mapData.ColorPlayer[i].SetTile(cellPosition, null);
+                }
+                    
+            }
+        } 
+    }
+    void AddLevelTower(bool lv)
+    {
+        if (TowerCor > -1)
+        {
+            if (lv)
+            {
+                if (Map3[TowerCor].b < 2)
+                {
+                    Map3[TowerCor].b++;
+                }
+            }
+            else
+            {
+                if (Map3[TowerCor].b > 0)
+                {
+                    Map3[TowerCor].b--;
+                }
+            }
+
+            text[1].text = "" + Map3[TowerCor].b;
+        }
+    }
+    void StartTowerRedactor()
+    {
+        towerLevel[0].onClick.AddListener(() => AddLevelTower(false));
+        towerLevel[1].onClick.AddListener(() => AddLevelTower(true));
+
+        towerButton[0].onClick.AddListener(() => TowerNewColor(0));
+        towerButton[1].onClick.AddListener(() => TowerNewColor(1));
+        towerButton[2].onClick.AddListener(() => TowerNewColor(2));
+        towerButton[3].onClick.AddListener(() => TowerNewColor(3));
+        towerButton[4].onClick.AddListener(() => TowerNewColor(4));
+        //for(int i = 0; i < towerLevel; i++)
+        //{
+        // }
+    }
+    void TowerLoad(bool Create)
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = new Vector3(mousePos.x, mousePos.y, 50);
+        Vector3Int cellPosition = gridLayout.WorldToCell(mousePos);
+
+        text[0].text = "" + cellPosition[0] + "  " + cellPosition[1];
+
+        int id = cellPosition[1] * width + cellPosition[0];
+        if (id > -1)
+        {
+            if (id < Map1.Length)
+            {
+                if (Create)
+                {
+                    if (Map3[id].r > 0)
+                    {
+                       // Debug.Log("OK");
+                        TowerCor = id;
+
+                        text[1].text = "" + Map3[TowerCor].b;
+
+                    }
+                }
+                else
+                {
+                    TowerNewColor(-1);
+                }
+            }
+        }
+    }
     void FixedUpdate()
     {
         if (Map1 != null)
         {
+
+            if (Input.GetMouseButtonDown(2))
+            {
+                TowerLoad(true);
+            }
+
+
             if (look)
             {
                 if (Input.GetMouseButton(0))
@@ -238,6 +380,12 @@ public class MapRedactor : MonoBehaviour
                         {
 
                             loadTile(MapI.curentPalitte + 1, null, NewTile);
+                            if (MapI.curentPalitte + 1 == 6)
+                            {
+                                //NewTile = mapData.DataTile[MapI.curentPalitte+1].Data[MapI.curentTile].tile;
+                                //loadTile(MapI.curentPalitte + 2, null, NewTile);
+                                TowerLoad(false);
+                            }
 
                         }
                     }
@@ -262,6 +410,10 @@ public class MapRedactor : MonoBehaviour
                         else
                         {
                             loadTile(MapI.curentPalitte + 1, nullTile, null);
+                            if(MapI.curentPalitte + 1 == 6)
+                            {
+                                loadTile(MapI.curentPalitte + 2, nullTile, null);
+                            }
                             // loadTile(MapI.curentPalitte, null, mapData.DataTile[MapI.curentPalitte].Data[WorldBiom].tile);
                             //   loadTile(MapI.curentPalitte + 1, null, NewTile);
                         }

@@ -7,6 +7,8 @@ public class MapData : MonoBehaviour
 {
     public SubMapData1[] DataTile;
     public Tilemap[] level;
+    public Tilemap[] ColorPlayer;
+    public Color[] Player;
 }
 
 [System.Serializable]
@@ -21,7 +23,7 @@ public class SubMapData
     public Sprite headSprite;
     public TileBase tile;
     public float TileSpeed;
-    public st Tayp;
+  //  public st Tayp;
 
     /*
      * Laver
