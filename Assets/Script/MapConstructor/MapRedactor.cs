@@ -18,8 +18,6 @@ public class MapRedactor : MonoBehaviour
 
     [SerializeField]
     private GridLayout gridLayout;
-    [SerializeField]
-    private Tile nullTile;
 
     [SerializeField]
     private int WorldBiom;
@@ -129,24 +127,30 @@ public class MapRedactor : MonoBehaviour
 
             if (Map3[i].r > 0)
             {
-                id = (int)Map2[i].r - 1;
+              //  Debug.Log(Map3[i].r);
+                id = (int)Map3[i].r - 1;
                 //Debug.Log(Map2[i].r);
                 //Debug.Log(mapData.DataTile[4].Data[(int)(Map2[i].r-1)].tile);
+               // Debug.Log(id);
                 mapData.level[5].SetTile(cellPosition, mapData.DataTile[5].Data[id].tile);
                 //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+
+                if (Map3[i].g > 0)
+                {
+                   int id2 = (int)Map3[i].g;
+
+                    mapData.ColorPlayer[id2].SetTile(cellPosition, mapData.DataTile[6].Data[id].tile);
+
+                    //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+                }
             }
-            if (Map3[i].g > 0)
-            {
-                id = (int)Map2[i].g - 1;
-                mapData.level[3].SetTile(cellPosition, mapData.DataTile[6].Data[id].tile);
-                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
-            }
-            if (Map3[i].b > 0)
-            {
-                id = (int)Map2[i].b - 1;
-                mapData.level[4].SetTile(cellPosition, mapData.DataTile[7].Data[id].tile);
-                //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
-            }
+            
+            //if (Map3[i].b > 0)
+            //{
+            //    id = (int)Map3[i].b - 1;
+            //    mapData.level[7].SetTile(cellPosition, mapData.DataTile[7].Data[id].tile);
+            //    //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
+            //}
         }
 
 
@@ -157,12 +161,12 @@ public class MapRedactor : MonoBehaviour
         }
 
 
-        gridLayout.GetComponent<GamePlayCore>().NewMap(Map1,Map2,width);
+       // gridLayout.GetComponent<GamePlayCore>().NewMap(Map1,Map2,width);
     }
     // Update is called once per frame
 
 
-    void loadTile(int palitte ,Tile NewTile, TileBase NewTileBase)
+    void loadTile(int palitte, TileBase NewTileBase)
     {
 
 
@@ -182,14 +186,7 @@ public class MapRedactor : MonoBehaviour
                     //    int id = Vector3Int.x Map1.width
 
 
-                    if (NewTile != null)
-                    {
-                        mapData.level[palitte].SetTile(cellPosition, NewTile);
-                    }
-                    else
-                    {
-                        mapData.level[palitte].SetTile(cellPosition, NewTileBase);
-                    }
+                    mapData.level[palitte].SetTile(cellPosition, NewTileBase);
 
                     mapData.level[palitte].RefreshAllTiles();
 
@@ -361,29 +358,29 @@ public class MapRedactor : MonoBehaviour
                         TileBase NewTile = mapData.DataTile[MapI.curentPalitte].Data[MapI.curentTile].tile;
                         if (MapI.curentPalitte == 0)
                         {
-                            loadTile(MapI.curentPalitte, null, NewTile);
+                            loadTile(MapI.curentPalitte, NewTile);
 
                         }
                         else if (MapI.curentPalitte == 1)
                         {
                             if (MapI.curentTile == WorldBiom)
                             {
-                                loadTile(MapI.curentPalitte, null, NewTile);
+                                loadTile(MapI.curentPalitte, NewTile);
                             }
                             else
                             {
-                                loadTile(MapI.curentPalitte, null, mapData.DataTile[MapI.curentPalitte].Data[WorldBiom].tile);
-                                loadTile(MapI.curentPalitte + 1, null, NewTile);
+                                loadTile(MapI.curentPalitte, mapData.DataTile[MapI.curentPalitte].Data[WorldBiom].tile);
+                                loadTile(MapI.curentPalitte + 1, NewTile);
                             }
                         }
                         else
                         {
 
-                            loadTile(MapI.curentPalitte + 1, null, NewTile);
+                            loadTile(MapI.curentPalitte + 1, NewTile);
                             if (MapI.curentPalitte + 1 == 6)
                             {
                                 //NewTile = mapData.DataTile[MapI.curentPalitte+1].Data[MapI.curentTile].tile;
-                                //loadTile(MapI.curentPalitte + 2, null, NewTile);
+                                //loadTile(MapI.curentPalitte + 2, NewTile);
                                 TowerLoad(false);
                             }
 
@@ -397,34 +394,34 @@ public class MapRedactor : MonoBehaviour
                     // MapI.curentTile = -1;
                     if (MapI.curentPalitte == 0)
                     {
-                        loadTile(MapI.curentPalitte, nullTile, null);
+                        loadTile(MapI.curentPalitte,  null);
                     }
                     else
                     if (MapI.curentPalitte == 1)
                     {
                         if (MapI.curentTile == WorldBiom)
                         {
-                            loadTile(MapI.curentPalitte, nullTile, null);
+                            loadTile(MapI.curentPalitte,  null);
                             //   loadTile(MapI.curentPalitte, null, NewTile);
                         }
                         else
                         {
-                            loadTile(MapI.curentPalitte + 1, nullTile, null);
+                            loadTile(MapI.curentPalitte + 1, null);
                             if(MapI.curentPalitte + 1 == 6)
                             {
-                                loadTile(MapI.curentPalitte + 2, nullTile, null);
+                                loadTile(MapI.curentPalitte + 2,  null);
                             }
                             // loadTile(MapI.curentPalitte, null, mapData.DataTile[MapI.curentPalitte].Data[WorldBiom].tile);
                             //   loadTile(MapI.curentPalitte + 1, null, NewTile);
                         }
 
 
-                        //loadTile(MapI.curentPalitte, nullTile, null);
-                        //loadTile(MapI.curentPalitte+1, nullTile, null);
+                        //loadTile(MapI.curentPalitte,  null);
+                        //loadTile(MapI.curentPalitte+1,  null);
                     }
                     else
                     {
-                        loadTile(MapI.curentPalitte + 1, nullTile, null);
+                        loadTile(MapI.curentPalitte + 1,  null);
                     }
                 }
 

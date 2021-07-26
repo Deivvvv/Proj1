@@ -58,7 +58,7 @@ public class CoreGenerator : MonoBehaviour
         GO.name = "Color" + i;
 
         GO.GetComponent<Tilemap>().color = mapData.Player[i];
-        GO.GetComponent<TilemapRenderer>().sortingOrder = 21+i;
+        GO.GetComponent<TilemapRenderer>().sortingOrder = 21;
         mapData.ColorPlayer[i] = GO.GetComponent<Tilemap>();
     }
     void AddGrid(int i)

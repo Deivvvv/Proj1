@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class TowerData : MonoBehaviour
 {
-    public st Tayp;
     public int[] Solder;
+    public int MaxSolder;
+
+    public int ResGen;
+    public int ResTayp;
+    public int TowerLevel;
 
     public int Team;
 
-
-
-    public enum st
-    {
-       Ruin =0,
-        Vilage = 1,
-        Tower = 2,
-        Castle = 3
-    }
 }

@@ -10,11 +10,20 @@ public class GamePlayCore : MonoBehaviour
     private GridLayout gridLayout;
     private float _time;
     //[SerializeField]
-    private TowerData[] _òowerData;
+    [SerializeField]
+    private MapData mapData;
+
+    private List<TowerData> towerData;
     [SerializeField]
     private TowerClassData[] _òowerClassData;
     [SerializeField]
-    private MobAnimator _mobAnimator;
+    private MapData _mapData;
+
+    [SerializeField]
+    private SaveLoadGame SLG;
+    //MapData
+    //[SerializeField]
+    //private MobAnimator _mobAnimator;
 
 
     private int width;
@@ -26,9 +35,72 @@ public class GamePlayCore : MonoBehaviour
     {
         _time = 0;
     }
-    public void NewMap(Color[] pix1, Color[] pix2, int w)
+
+   
+
+   public void LoadDataMap(Color[] M1, Color[] M2, Color[] M3, int w)
     {
         width = w;
+        NavigationMap(M1, M2);
+        AddTower(M3);
+    }
+
+    void AddTower(Color[] M3)
+    {
+        towerData = new List<TowerData>();
+        for (int i = 0; i < M3.Length; i++)
+        {
+
+            Vector3Int cellPosition = new Vector3Int(i % width, i / width, 50);
+            int id = 0;
+            
+            if (M3[i].r > 0)
+            {
+                TowerData TD = new TowerData();
+
+                id = (int)M3[i].r - 1;
+                mapData.level[5].SetTile(cellPosition, mapData.DataTile[5].Data[id].tile);
+
+                if (M3[i].g > 0)
+                {
+                    int id2 = (int)M3[i].g;
+                    mapData.ColorPlayer[id2].SetTile(cellPosition, mapData.DataTile[6].Data[id].tile);
+                    TD.Team = id2;
+
+                }
+                if (M3[i].b > 0)
+                {
+                    int id2 = (int)M3[i].b;
+                    mapData.ColorPlayer[id2].SetTile(cellPosition, mapData.DataTile[6].Data[id].tile);
+                    TD.TowerLevel= id2;
+
+                }
+
+                TD.ResGen = _òowerClassData[id].GenerateResource[TD.TowerLevel];
+                TD.ResTayp = _òowerClassData[id].Resource;
+
+                TD.MaxSolder = _òowerClassData[id].MaxSolder[TD.TowerLevel];
+                if (TD.ResTayp == 0)
+                {
+                    TD.Solder[0] = TD.MaxSolder;
+                }
+                else
+                {
+                    TD.Solder[0] = TD.MaxSolder / 2;
+                    TD.Solder[TD.ResTayp] = TD.MaxSolder / 2;
+
+                }
+
+
+                towerData.Add(TD);
+
+            }
+        }
+       
+    }
+
+    void NavigationMap(Color[] pix1, Color[] pix2)
+    {
         _mapPix = new float[pix1.Length];
 
         for(int i =0;i< pix1.Length; i++)
@@ -61,7 +133,7 @@ public class GamePlayCore : MonoBehaviour
 
     void TowerCall()
     {
-        for (int i = 0; i < _òowerData.Length; i++)
+        for (int i = 0; i < towerData.Count; i++)
         {
             //if (_òowerData[i].Solder > _òowerClassData[_òowerData[i].Tayp].MaxSolder[i])
             //{
@@ -218,10 +290,7 @@ public class GamePlayCore : MonoBehaviour
           //  Vector3 v1 = new Vector3(0, 0, 0);
         }
     }
-    public void AddTower()
-    {
-
-    }
+   
     void FixedUpdate()
     {
         _time += 0.1f * Time.deltaTime;
@@ -242,7 +311,7 @@ public class TowerClassData
     public int Resource;
 
 
-    public TowerDataColor TC;
+  //  public TowerDataColor TC;
 }
 [System.Serializable]
 public class TowerDataColor
