@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public class GamePlayCore : MonoBehaviour
 {
@@ -16,11 +17,13 @@ public class GamePlayCore : MonoBehaviour
     private List<TowerData> towerData;
     [SerializeField]
     private TowerClassData[] _òowerClassData;
-    [SerializeField]
-    private MapData _mapData;
 
     [SerializeField]
     private SaveLoadGame SLG;
+
+    [SerializeField]
+    private GameObject BaseIndicator;
+
     //MapData
     //[SerializeField]
     //private MobAnimator _mobAnimator;
@@ -70,9 +73,9 @@ public class GamePlayCore : MonoBehaviour
                 }
                 if (M3[i].b > 0)
                 {
-                    int id2 = (int)M3[i].b;
-                    mapData.ColorPlayer[id2].SetTile(cellPosition, mapData.DataTile[6].Data[id].tile);
-                    TD.TowerLevel= id2;
+                    int id3 = (int)M3[i].b;
+                   // mapData.ColorPlayer[id2].SetTile(cellPosition, mapData.DataTile[6].Data[id].tile);
+                    TD.TowerLevel= id3;
 
                 }
 
@@ -80,6 +83,7 @@ public class GamePlayCore : MonoBehaviour
                 TD.ResTayp = _òowerClassData[id].Resource;
 
                 TD.MaxSolder = _òowerClassData[id].MaxSolder[TD.TowerLevel];
+                TD.Solder = new int[4];
                 if (TD.ResTayp == 0)
                 {
                     TD.Solder[0] = TD.MaxSolder;
@@ -90,9 +94,28 @@ public class GamePlayCore : MonoBehaviour
                     TD.Solder[TD.ResTayp] = TD.MaxSolder / 2;
 
                 }
+                TD.Id = id;
+                TD.V3 = cellPosition;
 
+                GameObject GO = Instantiate(BaseIndicator);
+                //     GO.transform.position = new Vector3(cellPosition[1], cellPosition[0], 50);
+                GO.transform.position = gridLayout.CellToWorld(cellPosition);// new Vector3(cellPosition[0],cellPosition[1]-0.5);
+        GO.transform.position = new Vector3(GO.transform.position.x, GO.transform.position.y-0.5f, GO.transform.position.z);
+                //  TMP_Text m_TextComponent =
 
-                towerData.Add(TD);
+                GO.GetComponent<SpriteRenderer>().color = mapData.ColorPlayer[TD.Team].GetComponent<Tilemap>().color;
+                GO.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = $"{TD.Solder[0]}/{ TD.MaxSolder}";
+
+                GO.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>().color = mapData.ColorPlayer[TD.Team].GetComponent<Tilemap>().color;
+                GO.transform.GetChild(1).GetChild(0).gameObject.GetComponent<TMP_Text>().text = $"{TD.TowerLevel}";
+                // TMP_Text m_TextComponent = GetComponent<TMP_Text>();
+
+                // Change the text on the text component.
+                //  m_TextComponent.text = "Some new line of text.";
+
+                TD.Indicator = GO;
+
+               towerData.Add(TD);
 
             }
         }

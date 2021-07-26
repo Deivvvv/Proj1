@@ -43,6 +43,7 @@ public class SaveLoadGame : MonoBehaviour
         {
             AddColorGrid(i);
         }
+        Load("C1");
     }
 
     void AddColorGrid(int i)
@@ -326,6 +327,7 @@ public class SaveLoadGame : MonoBehaviour
             }
             // Debug.Log(pix1[15]);
 
+            TranfMap(pix1, pix2, pix3, noiseTex.width);
            // MR.TranfMap(Data.WorldBiom[ix], pix1, pix2, pix3, Data.WorldWidth[ix]);
 
         }

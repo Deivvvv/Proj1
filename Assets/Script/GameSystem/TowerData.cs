@@ -13,4 +13,8 @@ public class TowerData : MonoBehaviour
 
     public int Team;
 
+    public int Id;
+    public Vector3Int V3;
+
+    public GameObject Indicator;
 }
