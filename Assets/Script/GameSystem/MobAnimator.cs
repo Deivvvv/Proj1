@@ -39,20 +39,20 @@ public class MobAnimator : MonoBehaviour
         f += speed[1] * 0.9f;
 
 
-        bool xScale = false;
-        if (v2[0]< GO.transform.position.x)
-        {
-            xScale = true;
-            //GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
-        }
-        //else
+        //bool xScale = false;
+        //if (v2[0]< GO.transform.position.x)
         //{
-        //    GO.transform.DOScaleX(GO.transform.localScale.x, 0);
+        //    xScale = true;
+        //    //GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
         //}
-        if (xScale)
-        {
-            GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
-        }
+        ////else
+        ////{
+        ////    GO.transform.DOScaleX(GO.transform.localScale.x, 0);
+        ////}
+        //if (xScale)
+        //{
+        //    GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
+        //}
         // s.Append(this.m_Trans.DOLocalMoveX(-3.42f, Cube1RunTime));
         if (target.Length > 1)
         {
@@ -72,24 +72,24 @@ public class MobAnimator : MonoBehaviour
 
                 s.Insert(f, GO.transform.DOMove(target[i], speed[i], false));
 
-                if (v[0] < v1[1])
-                {
-                    if (xScale)
-                    {
-                        xScale = false;
-                        s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));  //  GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
-                    }
-                    //    if (GO.transform.localScale.x)
-                    //s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));
-                }
-                else
-                {
-                    if (!xScale)
-                    {
-                        xScale = true;
-                        s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));  //  GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
-                    }
-                }
+                //if (v[0] < v1[1])
+                //{
+                //    if (xScale)
+                //    {
+                //        xScale = false;
+                //        s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));  //  GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
+                //    }
+                //    //    if (GO.transform.localScale.x)
+                //    //s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));
+                //}
+                //else
+                //{
+                //    if (!xScale)
+                //    {
+                //        xScale = true;
+                //        s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));  //  GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
+                //    }
+                //}
                 //else
                 //{
                 //    s.Insert(f, GO.transform.DOScaleX(GO.transform.localScale.x, 0));

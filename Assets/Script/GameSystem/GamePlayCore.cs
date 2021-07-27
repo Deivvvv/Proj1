@@ -89,7 +89,7 @@ public class GamePlayCore : MonoBehaviour
         if ((_towerData[_targetTower].Solder[0] != 0) && (_towerData[_targetTower].Solder[Tayp] != 0)) 
         {
             GameObject GO = Instantiate(Ghost);
-            GO.transform.SetParent(gameObject.transform);
+          //  GO.transform.SetParent(gameObject.transform);
             GO.transform.position = new Vector3(-10,-10,-10) ;
             GO.name = "Mob";
             GO.GetComponent<MobTriger>().SetSystem(GetComponent<GamePlayCore>());
@@ -123,6 +123,10 @@ public class GamePlayCore : MonoBehaviour
             //_mobAnimator.Play(aNewCor, aSpeed, GO);
 
             UpdateTower(_targetTower);
+
+
+            GO.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TMP_Text>().text = $"{GO.GetComponent<MobData>().Size}";
+            GO.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TMP_Text>().color = mapData.Player[GO.GetComponent<MobData>().Team];
         }
     }
 
@@ -178,34 +182,34 @@ public class GamePlayCore : MonoBehaviour
                 if (Army2.Size <= 0)
                     RemoveBot(Army2.gameObject);
             }
-            else
-            {
-                //if (Army1.Tayp == Army2.Tayp)
-                //{
-                //    Co_WaitForSeconds(Army2, 2);
-                //    Army2.Pause = true;
-                //}
-                //else 
-                if (Army1.Tayp < Army2.Tayp)
-                {
-                    Stay(Army1, 2);
-                }
-                else
-                {
-                    Stay(Army2, 2);
-                }
+            //else
+            //{
+            //    //if (Army1.Tayp == Army2.Tayp)
+            //    //{
+            //    //    Co_WaitForSeconds(Army2, 2);
+            //    //    Army2.Pause = true;
+            //    //}
+            //    //else 
+            //    if (Army1.Tayp < Army2.Tayp)
+            //    {
+            //        Stay(Army1, 2);
+            //    }
+            //    else
+            //    {
+            //        Stay(Army2, 2);
+            //    }
 
                 
-                if (Army1.EndTowerID == Army2.EndTowerID)
-                {
-                    // if() // если привышин размер отряда, то переносим бойцов только до придела, а остаток оставляем во втором отряде
-                    if (Army1.Tayp == Army2.Tayp)
-                    {
-                        Army1.Size += Army2.Size;
-                        RemoveBot(Army2.gameObject);
-                    }
-                }
-            }
+            //    if (Army1.EndTowerID == Army2.EndTowerID)
+            //    {
+            //        // if() // если привышин размер отряда, то переносим бойцов только до придела, а остаток оставляем во втором отряде
+            //        if (Army1.Tayp == Army2.Tayp)
+            //        {
+            //            Army1.Size += Army2.Size;
+            //            RemoveBot(Army2.gameObject);
+            //        }
+            //    }
+            //}
         }
         else
         {
@@ -229,6 +233,7 @@ public class GamePlayCore : MonoBehaviour
                 _towerData[id].Solder[0] = -_towerData[id].Solder[0];
 
                 _towerData[id].Team = Army1.Team;
+                NewColor(id);
 
             }
 
@@ -336,18 +341,19 @@ public class GamePlayCore : MonoBehaviour
     }
     void NewColor(int id)
     {
+        Debug.Log(id);
         //  mapData.ColorPlayer[0].active = false;
         Vector3Int cellPosition = _towerData[id].V3;
         var tile = mapData.ColorPlayer[0].GetTile(cellPosition);
 
-        for (int i = 0; i < mapData.ColorPlayer.Length; i++)
+        for (int i = 1; i < mapData.ColorPlayer.Length; i++)
         {
-            if (id == 0)
-            {
-                // mapData.ColorPlayer[i].SetTile(cellPosition, null);
-            }
-            else
-            if (i == id)
+            //if (_towerData[id].Team == 0)
+            //{
+            //    // mapData.ColorPlayer[i].SetTile(cellPosition, null);
+            //}
+            //else
+            if (i == _towerData[id].Team)
             {
                 mapData.ColorPlayer[i].SetTile(cellPosition, tile);
             }
@@ -356,6 +362,11 @@ public class GamePlayCore : MonoBehaviour
                 mapData.ColorPlayer[i].SetTile(cellPosition, null);
             }
 
+        }
+        for (int i = 1; i < mapData.ColorPlayer.Length; i++)
+        {
+
+            mapData.ColorPlayer[i].RefreshAllTiles();
         }
     }
     void UpdateTower(int id) 
