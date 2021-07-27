@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735cd51fbd8aff145b87c580237d1231, type: 3}
   m_Name: Data
   m_EditorClassIdentifier: 
-  Name: []
+  Name:
+  - C1
   WorldBiom: 
-  WorldWidth: 
+  WorldWidth: 00000000
   DataTime: []

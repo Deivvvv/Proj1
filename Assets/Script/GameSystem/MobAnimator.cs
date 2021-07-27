@@ -8,39 +8,40 @@ public class MobAnimator : MonoBehaviour
 {
     //private GridLayout gridLayout;
     //public List<Vector3> target;
-    private Sequence s;
+  //  private Sequence s;
     //private float speed;
     //private int targetNum;
     // Start is called before the first frame update
     void Start()
     {
        // targetNum = 0;
-        Vector3[] target1 = new Vector3[3];
-        target1[0] = new Vector3(1,-120, 0);
-        target1[1] = new Vector3(10, 16, 0);
-        target1[2] = new Vector3(-10, 0, 0);
+        //Vector3[] target1 = new Vector3[3];
+        //target1[0] = new Vector3(1,-120, 0);
+        //target1[1] = new Vector3(10, 16, 0);
+        //target1[2] = new Vector3(-10, 0, 0);
 
 
-        float[] speed1 = new float[3];
-        speed1[0] = 10f;
-        speed1[1] = 3f;
-        speed1[2] = 10f;
+        //float[] speed1 = new float[3];
+        //speed1[0] = 10f;
+        //speed1[1] = 3f;
+        //speed1[2] = 10f;
 
-        Play(target1, speed1, gameObject);
+        //Play(target1, speed1, gameObject);
     }
 
     // Update is called once per frame
    public void Play(Vector3[] target, float[] speed,GameObject GO)//FixedUpdate()
     {
+        Sequence s = GO.GetComponent<MobData>().s;
        // s.Pause();
        s.Kill();
         // GO.transform.Reset();
         //var 
         s = DOTween.Sequence();
-      //  s = DOTween.Sequence();
+        //  s = DOTween.Sequence();
         //var Cube1RunTime = 1.0f;
         //var Cube2RunTime = 1.0f;
-
+        Debug.Log(target[0]);
         Vector3 v = target[0];
         Vector3 v1 = target[1];
         Vector3 v2 = new Vector3((v[0] + v1[0]) / 2, (v[1] + v1[1]) / 2, 0);

@@ -279,7 +279,7 @@ public class SaveLoadGame : MonoBehaviour
 
     public void Load(string Name)
     {
-        
+        Debug.Log("f");
         int ix = Data.Name.Count;
         bool newName = true;
         for (int i = 0; i < ix; i++)
@@ -327,6 +327,7 @@ public class SaveLoadGame : MonoBehaviour
             }
             // Debug.Log(pix1[15]);
 
+            Debug.Log("f");
             TranfMap(pix1, pix2, pix3, noiseTex.width);
            // MR.TranfMap(Data.WorldBiom[ix], pix1, pix2, pix3, Data.WorldWidth[ix]);
 

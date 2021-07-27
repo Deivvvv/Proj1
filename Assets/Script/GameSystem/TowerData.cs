@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerData : MonoBehaviour
+public class TowerData //: MonoBehaviour
 {
     public int[] Solder;
     public int MaxSolder;
