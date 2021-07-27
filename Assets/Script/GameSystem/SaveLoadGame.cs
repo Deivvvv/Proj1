@@ -43,7 +43,7 @@ public class SaveLoadGame : MonoBehaviour
         {
             AddColorGrid(i);
         }
-        Load("C1");
+        Load("C2");
     }
 
     void AddColorGrid(int i)
@@ -55,6 +55,10 @@ public class SaveLoadGame : MonoBehaviour
         GO.GetComponent<Tilemap>().color = mapData.Player[i];
         GO.GetComponent<TilemapRenderer>().sortingOrder = 21;
         mapData.ColorPlayer[i] = GO.GetComponent<Tilemap>();
+        if (i == 0)
+        {
+            GO.active = false;
+        }
     }
 
     void AddGrid(int i)

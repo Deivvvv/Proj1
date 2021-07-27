@@ -132,7 +132,7 @@ public class MapRedactor : MonoBehaviour
                 //Debug.Log(Map2[i].r);
                 //Debug.Log(mapData.DataTile[4].Data[(int)(Map2[i].r-1)].tile);
                // Debug.Log(id);
-                mapData.level[5].SetTile(cellPosition, mapData.DataTile[5].Data[id].tile);
+                mapData.level[6].SetTile(cellPosition, mapData.DataTile[5].Data[id].tile);
                 //   mapData.level[0].SetTile(cellPosition, mapData.DataTile[0].Data[(int)Map1.r].tile);
 
                 if (Map3[i].g > 0)
@@ -254,9 +254,10 @@ public class MapRedactor : MonoBehaviour
            // Debug.Log(cellPosition);
             TileBase NewTile = mapData.DataTile[6].Data[(int)Map3[TowerCor].r-1].tile;
             for (int i = 0; i < mapData.ColorPlayer.Length; i++)
-            {if(id == 0)
+            {
+                if(id == 0)
                 {
-                    mapData.ColorPlayer[i].SetTile(cellPosition, null);
+                   // mapData.ColorPlayer[i].SetTile(cellPosition, null);
                 }
                 else
                 if (i == id) 

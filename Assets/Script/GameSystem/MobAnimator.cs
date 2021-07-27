@@ -12,22 +12,7 @@ public class MobAnimator : MonoBehaviour
     //private float speed;
     //private int targetNum;
     // Start is called before the first frame update
-    void Start()
-    {
-       // targetNum = 0;
-        //Vector3[] target1 = new Vector3[3];
-        //target1[0] = new Vector3(1,-120, 0);
-        //target1[1] = new Vector3(10, 16, 0);
-        //target1[2] = new Vector3(-10, 0, 0);
-
-
-        //float[] speed1 = new float[3];
-        //speed1[0] = 10f;
-        //speed1[1] = 3f;
-        //speed1[2] = 10f;
-
-        //Play(target1, speed1, gameObject);
-    }
+    
 
     // Update is called once per frame
    public void Play(Vector3[] target, float[] speed,GameObject GO)//FixedUpdate()
@@ -41,7 +26,8 @@ public class MobAnimator : MonoBehaviour
         //  s = DOTween.Sequence();
         //var Cube1RunTime = 1.0f;
         //var Cube2RunTime = 1.0f;
-        Debug.Log(target[0]);
+       // Debug.Log(target[0]);
+        GO.transform.position = target[0];
         Vector3 v = target[0];
         Vector3 v1 = target[1];
         Vector3 v2 = new Vector3((v[0] + v1[0]) / 2, (v[1] + v1[1]) / 2, 0);
@@ -53,13 +39,19 @@ public class MobAnimator : MonoBehaviour
         f += speed[1] * 0.9f;
 
 
+        bool xScale = false;
         if (v2[0]< GO.transform.position.x)
         {
-            GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
+            xScale = true;
+            //GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
         }
-        else
+        //else
+        //{
+        //    GO.transform.DOScaleX(GO.transform.localScale.x, 0);
+        //}
+        if (xScale)
         {
-            GO.transform.DOScaleX(GO.transform.localScale.x, 0);
+            GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
         }
         // s.Append(this.m_Trans.DOLocalMoveX(-3.42f, Cube1RunTime));
         if (target.Length > 1)
@@ -82,12 +74,31 @@ public class MobAnimator : MonoBehaviour
 
                 if (v[0] < v1[1])
                 {
-                    s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));
+                    if (xScale)
+                    {
+                        xScale = false;
+                        s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));  //  GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
+                    }
+                    //    if (GO.transform.localScale.x)
+                    //s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));
                 }
                 else
                 {
-                    s.Insert(f, GO.transform.DOScaleX(GO.transform.localScale.x, 0));
+                    if (!xScale)
+                    {
+                        xScale = true;
+                        s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));  //  GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
+                    }
                 }
+                //else
+                //{
+                //    s.Insert(f, GO.transform.DOScaleX(GO.transform.localScale.x, 0));
+                //}
+
+                //if (xScale)
+                //{
+                //    s.Insert(f, GO.transform.DOScaleX(-GO.transform.localScale.x, 0));  //  GO.transform.DOScaleX(-GO.transform.localScale.x, 0);
+                //}
             }
         }
         //s.Insert(speed[0], GO.transform.DOMove(target[1], speed[1], false));

@@ -334,7 +334,30 @@ public class GamePlayCore : MonoBehaviour
         }
        
     }
+    void NewColor(int id)
+    {
+        //  mapData.ColorPlayer[0].active = false;
+        Vector3Int cellPosition = _towerData[id].V3;
+        var tile = mapData.ColorPlayer[0].GetTile(cellPosition);
 
+        for (int i = 0; i < mapData.ColorPlayer.Length; i++)
+        {
+            if (id == 0)
+            {
+                // mapData.ColorPlayer[i].SetTile(cellPosition, null);
+            }
+            else
+            if (i == id)
+            {
+                mapData.ColorPlayer[i].SetTile(cellPosition, tile);
+            }
+            else
+            {
+                mapData.ColorPlayer[i].SetTile(cellPosition, null);
+            }
+
+        }
+    }
     void UpdateTower(int id) 
     {
         TowerData TD = _towerData[id];
@@ -578,7 +601,7 @@ public class GamePlayCore : MonoBehaviour
    
     void FixedUpdate()
     {
-        _time += 1f * Time.deltaTime;
+        _time += 0.5f * Time.deltaTime;
         if(_time >= 1)
         {
             _time = 0;
