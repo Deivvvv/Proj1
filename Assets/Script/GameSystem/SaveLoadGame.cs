@@ -128,6 +128,7 @@ public class SaveLoadGame : MonoBehaviour
                 id = (int)Map3[i].r - 1;
                 mapData.level[5].SetTile(cellPosition, mapData.DataTile[5].Data[id].tile);
 
+                mapData.ColorPlayer[0].SetTile(cellPosition, mapData.DataTile[6].Data[id].tile);
                 if (Map3[i].g > 0)
                 {
                     int id2 = (int)Map3[i].g;
